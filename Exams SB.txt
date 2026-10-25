@@ -1,0 +1,32 @@
+Exams SB:
+- What is the ideal and the real-world distribution of match scores. What appears because of it.
+- Describe Ultrasound reflection-based sensor.
+- How do we remove spurious minutiae points. Draw and describe.
+- How big is the iris code and why?
+- What happens with iris dilation with age. What are the consequences.
+- Why do we use cascades in Viola-Jones and how.
+- What happens with performance and parameters when we remove deep layers in a DNN.
+- Explain Hybrid multibiometric systems and Multi-factor authentication. Why is that better than uni-modal approach.
+- What common property do texture-based, model-based and even deep-learning face recognition models have.
+- Where did we use Borda count method. Describe how it works.
+- Name and describe the differences in enrolment and recognition pipelines
+- What is the iedeal and the real-world distribution of match scores. Deffine the problems if there are any.
+- Explain minutiae matching. Use pseudo-code to do so.
+- What are the levels in face recognition. Name them based on the features used in each level. Approx what PDI do we requite for each level.
+- Why do we use a mask in iris recognition. How do we normalize the iris?
+- Explain HOG for face detection. How do we use it in matching?
+- What does ROC curve tell us about the system. How do we compare different systems based on it?
+- What can be seen when observing the Fourier transformation of local points in iris?
+- Explain Poincare index. Where did we use it?
+- How are feature pyramids used in RetinaFace?
+- lbp
+- cross-validation
+- GMR GNMR - FNMR FMR
+- FMR FNMR une krivulje kako je realno in kako bi blo najbujš
+- validation protocols
+- minutia kaj je pa opiši
+- L1 L2 L3 face detection
+- izbolšanje kakovosti prstnega odtisa kaj izboljšamo mislem da pa opisat eno metodo
+- recognition in enrollment pipeline
+- kako pa zakaj normaliziramo sliko šarenice pa kaj je maska
+

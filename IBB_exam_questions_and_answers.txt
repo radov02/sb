@@ -1,0 +1,2414 @@
+=====================================================================================
+IMAGE-BASED BIOMETRICS (IBB) - ALL EXAM QUESTIONS WITH MODEL ANSWERS
+=====================================================================================
+Course   : Image Based Biometry, UL FRI (P. Peer et al.)
+Built    : 2026-10-24
+Language : English (the exams allow English or Slovene)
+
+-------------------------------------------------------------------------------------
+0. READ ME FIRST
+-------------------------------------------------------------------------------------
+SOURCES READ (all of it, nothing skipped)
+  - IBB_slides_Jan25.pdf ........ all 400 pages (text of every page + the figure slides
+                                  that matter: sensors, taxonomies, distributions, fusion).
+                                  The answers are built primarily from these slides.
+  - exams/exam-2022-01-16.pdf ... exam paper dated 2022-01-26 (file name says 01-16, the
+                                  date printed inside the paper is 2022-01-26)
+  - exams/exam-2022-02-09.pdf ... exam paper 2022-02-09
+  - exams/Pasted image*.png, Screenshot*.png ... photos of the papers 2024-01-29,
+                                  2023-01-18, 2018-01-31, 2022-01-26 (duplicate of the PDF),
+                                  2020-01-29 (left edge cut off in the photo, wording
+                                  completed from the solved sheet), 2024-08-22
+  - exams/sb_exams_solved_2025.pdf . a STUDENT-made solved sheet (25 pages). It holds the
+                                  answers (and, for 2017 and 2025, the only trace of the
+                                  question wording). It is NOT trusted: several answers in it
+                                  are wrong or incomplete, see section 5.
+  - exams/SB_exam.pdf ........... a second copy of the student sheet for the 2017, 2018 and
+                                  2020 papers (8 pages). It prints the 2017 and 2018 question
+                                  wording verbatim (confirms my reading) and has the same
+                                  mistakes as the sheet above.
+  - exams/Exams SB.txt .......... undated list of question topics (English + Slovene notes)
+  - exams/Slikovna Biometrija - Ustni Izpit Vprasanja.pdf ... ORAL exam: 29 question sets
+                                  (about 140 questions, in Slovene, 4-5 per student, a few with
+                                  the grade and the examiner's reactions) as remembered by
+                                  students. Translated and answered here (section 1B).
+                                  Several oral topics are NOT on the Jan25 slides (Hong's
+                                  enhancement algorithm, "2SES", Henry system, 1D smoothing);
+                                  those answers rest on outside sources and are tagged.
+
+COVERAGE: 9 written papers x 10 questions = 90 questions + 29 oral question sets (~140
+  questions, section 1B) + 10 extra topics from "Exams SB.txt" that appear in no paper.
+  The 2025 paper (and the 2020 left edge) is not in the folder as an image: its wording is
+  reconstructed from the solved sheet's headings. The 2017 paper has no date on the sheet
+  ("2017-00-00"); its wording is confirmed by SB_exam.pdf.
+
+HOW THE FILE IS ORGANISED
+  Section 1  Index by exam: every written question, in paper order, with the topic code
+             that holds its answer. Section 1B: the oral-exam question sets, same idea,
+             plus what the examiner reportedly wanted to hear.
+  Section 2  Answers grouped by topic (A fundamentals/evaluation, B fingerprint, C iris,
+             D face, E multibiometrics, F topics asked only in the oral exam / notes,
+             G normalisation). Repeated questions are answered once; the wording of each
+             variant and the exams it appeared in are listed on top, and the answer covers
+             every sub-question of every variant. "O12.3" = oral set 12, question 3.
+  Section 3  Where the items of "Exams SB.txt" are answered.
+  Section 4  Numbers to memorise.
+  Section 5  Mistakes found in the student solved sheet (do not copy those).
+  Section 6  Open points / what I could not verify.
+
+TAGS USED IN THE ANSWERS
+  [S p.N]  = taken from the slides, PDF page N of IBB_slides_Jan25.pdf
+  [X]      = standard textbook knowledge that is NOT on the slides (safe extra, for depth)
+  [W]      = checked against an outside source on the web (listed in section 6)
+  [!]      = the solved sheet says something different or wrong here
+  [?]      = I could not pin the expected answer down; reasoning given
+
+ABOUT "100 % OF THE POINTS"
+  I do not have the examiner's marking key, so no one can promise full marks. What this
+  file does: every point the slides make about a question is in the answer; where the
+  slides are thin, the missing part is filled from standard literature and marked [X].
+  In an exam, answer in short bullet points, add a sketch when the question says
+  "sketch/draw/illustrate", and quote the numbers (they are cheap points).
+
+ABBREVIATIONS
+  FMR/FAR false match / false accept rate     FNMR/FRR false non-match / false reject rate
+  GMR genuine match rate (= 1 - FNMR)         EER equal error rate     tau decision threshold
+  FTE/FTA failure to enroll / to acquire      HD Hamming distance      IPD inter-pupillary distance
+  SP singular point    L1/L2/L3 feature levels    VJ Viola-Jones    NIR near-infrared
+  ppi pixels per inch  PCA/LDA principal component / linear discriminant analysis
+
+
+=====================================================================================
+1. INDEX BY EXAM (question wording as printed; code in [ ] = where the answer is)
+=====================================================================================
+
+---- EXAM 2017 (date unknown; wording taken from the student sheet SB_exam.pdf) ----
+ 1. Name and explain briefly each of the authentication types.                     [A2]
+ 2. At which stage in the recognition pipeline do we use the similarity score and the
+    distance score? What is the difference between the similarity score and the
+    distance score?                                                                [A5]
+ 3. Explain how do we calculate False Non-Match Rate? Also, sketch and mark it using
+    the genuine and impostor distributions.                                        [A6]
+ 4. Explain measures AUC and EER. What does it mean if AUC is 0.5?                 [A7]
+ 5. Which factors must be considered to determine the suitability of a physical or a
+    behavioral trait?                                                              [A1]
+ 6. Name the fingerprint pattern types that are based on spatial relationship between
+    singular points. To which type the majority of prints belong to? What is the
+    expected number of singular points within a fingerprint?                       [B2]
+ 7. How do we extract minutiae from binarized and thinned fingerprint image?       [B7]
+ 8. How many pixels across the iris in the radial direction for successful processing
+    do most iris recognition systems expect? Why do we need to use near-IR spectrum
+    for iris acquisition?                                                          [C1]
+ 9. In face detection step we used integral image. Why do we need it and how do we
+    calculate it? How many cascades do we need to reach a GMR of 0.9 and a FMR of
+    approximately 10^-6, if each cascade has a GMR of 0.99 and a FMR of 0.3?       [D2]
+10. What is the difference between Eigenfaces and Fisherfaces? Which methods are
+    behind each of them?                                                           [D5]
+
+---- EXAM 2018-01-31 ----
+ 1. Which of the statements are scientific facts?
+    (a) The physical trait itself is unique.
+    (b) The physical trait itself is permanent.
+    (c) Biometric systems rely only on the digital measurements and not on the real
+        physical traits.
+    (d) Sensing introduces variations in the samples of the same biometric trait of a
+        user obtained over a period of time.
+    (e) If two feature sets are identical, it may be a strong indication that the
+        biometric data actually comes from an adversary who is replaying the data
+        recorded at an earlier time.                                               [A1]
+ 2. Name problems pertaining to higher error rates (FNMR).                         [A6]
+ 3. Explain the ROC curve and what it reveals if we compare two systems.           [A7]
+ 4. Name and sketch general steps in the design cycle of a biometric system.       [A4]
+ 5. Which are the levels of features in fingerprints; name them by features? Define the
+    meaning of singular points. What kind of singular points types are we looking for
+    within the image?                                                          [B1, B2]
+ 6. Name fingerprint scan sensors technology. Describe one of them in detail.      [B4]
+ 7. Sketch basic taxonomy of fingerprint quality evaluation algorithms. Explain briefly
+    how NFIQ (NIST Fingerprint Image Quality) algorithm works.                     [B10]
+ 8. How big is typically the iris code? Why?                                       [C2]
+ 9. When it comes to faces, what is the basic resemblance between how do people
+    recognize faces and how the CNN recognizes them?                               [D8]
+10. Describe the properties of multimodal systems.                                 [E1]
+
+---- EXAM 2020-01-29 (photo cut at the left edge; wording completed from the sheet) ----
+ 1. Describe decision-level fusion. In this context describe majority voting method. [E6]
+ 2. Describe the properties of the multimodal biometric systems.                   [E1]
+ 3. What can you say about the analysis of the discriminative information contained in
+    each layer of a CNN?                                                           [D8]
+ 4. What is the main difference between PCA and LDA? How do Fisherfaces and Eigenfaces
+    correlate to them? What should we do if the number of training samples (N) is
+    smaller than the dimensionality of the data (d)?                               [D5]
+ 5. Describe alignment by geometric warping. Any problem with this method? If yes, what
+    kind of a problem and how can we mitigate it?                                  [D3]
+ 6. How and why do we use cascades in the Viola-Jones method? Which are the two most
+    effective Haar-like filters? In which stage of the cascade would you use them? [D2]
+ 7. Describe and link the following terms together: singular points, pattern type,
+    minutiae, resolution.                                                          [B2]
+ 8. What kind of image imperfections can we find by analysing the Fourier spectra of
+    local iris regions? Describe the properties of the Fourier spectra for each of
+    them.                                                                          [C6]
+ 9. Why do we need to normalise the iris image? Describe the normalisation process. Why
+    do we need the iris mask for?                                                  [C3]
+10. How do we extract minutiae from (one-pixel wide) ridges? How do we determine their
+    directions?                                                                    [B7]
+
+---- EXAM 2022-01-26 (file exam-2022-01-16.pdf) ----
+ 1. Explain all three levels of features for face recognition.                     [D1]
+ 2. We skeletonised the binary image of a fingerprint. How do we now extract the
+    minutiae information (including direction)? Sketch and explain.                [B7]
+ 3. What kind of pattern types can we observe on rolled fingerprint images? What can we
+    conclude based on the number of singular points on them?                       [B2]
+ 4. Explain alignment by geometric warping. Which method gives better results in a more
+    general alignment context and why?                                             [D3]
+ 5. Why is the normalisation of iris images needed in a standard iris recognition
+    pipeline? How do we do it?                                                     [C3]
+ 6. How can we test our trained model using cross validation? Why do we use cross
+    validation?                                                                    [A9]
+ 7. What is an integral image? Where did we use it? How did we use it? Why did we use
+    it?                                                                            [D2]
+ 8. Which modality out of three in-depth discussed at the course gives most
+    interpretable information to a human for determining the gender of a subject based
+    on extracted features? Explain why?                                            [D9]
+ 9. Sketch the taxonomy of fusion levels. Which of them are applicable in a
+    verification scenario?                                                         [E3]
+10. Place the formula  D = [ (F1+F2+F3) ; F2/(F1+F3) ]  into the context of the course
+    content and explain it.                                                        [C6]
+
+---- EXAM 2022-02-09 ----
+ 1. Describe the main differences between the three levels of features for fingerprint
+    recognition.                                                                   [B1]
+ 2. Sketch the design of an optical FTIR-based sensor and explain on it how the image is
+    generated.                                                                     [B4]
+ 3. What conclusions did we obtain from iris recognition system when we experimented
+    with images of the same person but with different pupil dilations (in terms of
+    authentic and impostor distributions)? Sketch and explain.                     [C5]
+ 4. Sketch and explain HOG image descriptors. Where did we use them? What is the
+    difference between sparse and dense arrangements?                              [D7]
+ 5. We said that the amount of information available for fusion gets reduced as one
+    progresses along the various processing modules of a biometric system. Select one
+    modality and sketch and explain this statement on it.                          [E3]
+ 6. How can we detect the presence of printed contact lenses in ocular images? Can the
+    printing process affect the detection - and if yes, how?                       [C7]
+ 7. What is the main difference between Eigenfaces and Fisherfaces? Write the algorithm
+    (in pseudo-code) that gives Eigenfaces as an output.                           [D5]
+ 8. Where did we use Borda Count Method and Logistic Regression Method? How do we get
+    the first one from the second one?                                             [E5]
+ 9. Name and explain the properties of curves giving FNMR and FMR dependence.
+    Additionally, let's say that we are observing two curves that are intersecting at
+    one point: how can we argument which one (which system) is better?             [A7]
+10. Sketch and describe the method for extraction of singularity points.           [B6]
+
+---- EXAM 2023-01-18 ----
+ 1. What is the difference between authentication types and recognition types?     [A2]
+ 2. What is wrong with the accuracy as a detection metric (explain through an
+    example)? Can you name and explain a more suitable one?                        [A8]
+ 3. Explain the information given on a tenprint card.                              [B3]
+ 4. Draw a sequence of steps that result in fingerprint feature extraction at level 1
+    and 2. Explain briefly each step.                                              [B5]
+ 5. What iris resolution do most iris recognition systems expect for successful
+    processing? Which is the fundamental operator for comparison of iris codes?    [C1]
+ 6. Why the pupil size varies (there are plenty of reasons)? What did Daugman state in
+    his patent about the influence of dilation? How did he solve the problem of
+    different pupil sizes?                                                         [C5]
+ 7. Which step of the Viola-Jones face detector can be regarded as a brute force
+    approach and why? Why does this method have problems with inverted faces?      [D2]
+ 8. Explain the basic concept of the PCA. How do we reduce the dimensionality of the
+    space with it?                                                                 [D5]
+ 9. Explain how MLBP method works.                                                 [D7]
+10. Draw and briefly explain the taxonomy of five classes of biometrics sources of
+    multiple evidence.                                                             [E2]
+
+---- EXAM 2024-01-29 ----
+ 1. Name at least three metrics (one of them must be graphical) that are used in the
+    verification scenarios and another three (one again graphical) for identification
+    scenarios.                                                                     [A7]
+ 2. What are the minutiae points? Which types do we know? How do we determine the
+    direction of each minutiae point?                                              [B7]
+ 3. Which metric do we normally use for matching in the iris recognition pipeline? What
+    can you say about the imposter and genuine examples distributions in this context? [C4]
+ 4. What do we normally do in the iris recognition pipeline to account for the varying
+    head tilt? How is that implemented? What is the main advantage and the main
+    disadvantage of this process?                                                  [C4]
+ 5. How do we calculate the integral image? Where is it used? What is a weak and what is
+    a strong classifier in this context?                                           [D2]
+ 6. Describe the alignment by geometric warping. Which method is better addressing the
+    alignment than this one?                                                       [D3]
+ 7. What is a jet in the context of face recognition? In which method do we use them?
+    How do we construct them and use them in matching?                             [D6]
+ 8. Describe the properties of a multimodal system.                                [E1]
+ 9. Which combination rules do we know in the transformation-based score fusion? Which
+    assumptions do they have to follow? What is the key difference between score-level
+    fusion in verification and identification mode?                                [E4]
+10. Illustrate and describe the use of HOGs for matching of faces.                 [D7]
+
+---- EXAM 2024-08-22 ----
+ 1. What are the singular points and which types do we know? What are the minutiae
+    points and which types do we know?                                         [B2, B7]
+ 2. Which are the parameters in the alignment process of two fingerprints just before
+    matching? How do we compensate for non-linear deformations in the alignment
+    process?                                                                       [B9]
+ 3. How big is the standard iris code? Explain why so?                             [C2]
+ 4. What can we conclude about the quality of the iris image from the results of
+    analysis of Fourier spectra of local iris regions?                             [C6]
+ 5. How and why do we use cascades at the end of the Viola-Jones face detector? Which
+    are the two most effective Haar-like filters in this context?                  [D2]
+ 6. Draw the basic (level one is enough) taxonomy of face recognition methods. Add one
+    more specific method of each of the branches in the taxonomy.                  [D4]
+ 7. List all five classes of sources of multiple evidence. Which of them is regarded as
+    the most effective one and why?                                                [E2]
+ 8. Explain a) rank-level fusion and b) Borda count method.                        [E5]
+ 9. Which graphical metric (benchmarking score) would you traditionally use (and
+    explain why) in presenting results of a) an identification system, b) a
+    verification system, c) a detection or segmentation system?                    [A7]
+10. What are the main differences between PCA and LDA?                             [D5]
+
+---- EXAM 2025-01-30 (wording reconstructed from the solved sheet) ----
+ 1. Name and describe the differences in enrolment and recognition pipelines.      [A3]
+ 2. What is the ideal and the real-world distribution of match scores. Define the
+    problems if there are any.                                                     [A5]
+ 3. Explain minutiae matching. Use pseudo-code to do so.                           [B9]
+ 4. What are the levels in face recognition. Name them based on the features used in
+    each level. Approx. what IPD (inter-pupillary distance) do we require for each
+    level.                                                                         [D1]
+ 5. Why do we use a mask in iris recognition. How do we normalize the iris?        [C3]
+ 6. Explain HOG for face detection. How do we use it in matching?                  [D7]
+ 7. What does ROC curve tell us about the system. How do we compare different systems
+    based on it?                                                                   [A7]
+ 8. What can be seen when observing the Fourier transformation of local points in iris? [C6]
+ 9. Explain Poincare index. Where did we use it?                                   [B6]
+10. How are feature pyramids used in RetinaFace?                                   [D8]
+
+---- "Exams SB.txt" (undated topic list). Items already identical to a paper question
+     above are marked "=" ; the rest are answered in section 3 or in the topic shown. ----
+ N1  Describe Ultrasound reflection-based sensor.                                   [B4]
+ N2  How do we remove spurious minutiae points. Draw and describe.                  [B8]
+ N3  How big is the iris code and why?                                  (= 2018 Q8)  [C2]
+ N4  What happens with iris dilation with age. What are the consequences.           [C5]
+ N5  Why do we use cascades in Viola-Jones and how.                     (= 2020 Q6)  [D2]
+ N6  What happens with performance and parameters when we remove deep layers in a
+     DNN.                                                                           [D8]
+ N7  Explain Hybrid multibiometric systems and Multi-factor authentication. Why is
+     that better than uni-modal approach.                                           [E2]
+ N8  What common property do texture-based, model-based and even deep-learning face
+     recognition models have.                                                       [D4]
+ N9  Where did we use Borda count method. Describe how it works.        (~ 2022-02 Q8) [E5]
+ N10 Name and describe the differences in enrolment and recognition pipelines.
+                                                                        (= 2025 Q1)  [A3]
+ N11-N20 = the ten questions of the 2025-01-30 paper (ideal/real distribution, minutiae
+     matching pseudo-code, levels in face recognition, mask+normalisation in iris, HOG,
+     ROC, Fourier transformation in iris, Poincare index, feature pyramids RetinaFace).
+ N21 lbp                                                         (~ 2023 Q9)  [D7]
+ N22 cross-validation                                            (= 2022-01 Q6) [A9]
+ N23 GMR GNMR - FNMR FMR                                                            [A6]
+ N24 FMR FNMR curves: how it is in reality and how it would be best (ideal)         [A5]
+ N25 validation protocols                                                           [A9]
+ N26 minutia: what is it, describe                               (= 2024-01 Q2) [B7]
+ N27 L1 L2 L3 face detection  (= levels of face features)        (= 2022-01 Q1) [D1]
+ N28 improving the quality of a fingerprint: what do we improve, describe one method [B10]
+ N29 recognition and enrollment pipeline                          (= 2025 Q1)  [A3]
+ N30 why and how do we normalise the iris image, and what is the mask (= 2025 Q5)  [C3]
+
+
+=====================================================================================
+1B. ORAL EXAM (ustni izpit) - question sets reported by students
+=====================================================================================
+Source: "Slikovna Biometrija - Ustni Izpit Vprasanja.pdf" (Slovene, 7 pages). Each block =
+one student's oral exam (usually 5 questions, one block has 4). I translated the questions;
+words in "quotes" are the student's. Codes in [ ] point to the answer topic in section 2;
+"F" topics (B11, B12, D10, D11, G1) are the ones that exist only in the oral list.
+Question numbers: O<set>.<question>, e.g. O12.3.
+
+O1   1 Error theory (wanted FNMR vs FMR) [A6]   2 Quality assessment of fingerprints [B10]
+     3 NFIQ - "tell everything you know" [B10]   4 Iris normalization - "everything you know" [C3]
+     5 Face recognition taxonomy (model-, texture-, appearance-based); for each branch he asked
+       which algorithms belong to it [D4]
+O2   1 PCA [D5]   2 Authentication types, metrics for verification [A2, A7]
+     3 Idea of the Gabor filter, iris code [C2]   4 Multibiometric systems - division [E2]
+     5 Fingerprint feature levels + description [B1]
+O3   1 LBP + taxonomy (appearance-, model-, texture-based) [D7, D4]
+     2 Authentication types, metrics for identification (rank-1, 5 ... CMC) [A2, A7]
+     3 L2 fingerprint [B1, B7]   4 Iris normalization [C3]   5 LDA [D5]
+O4   (37/50) 1 Iris normalization (how many bits and the procedure) [C3, C2]
+     2 Iris quality in the frequency domain [C6]   3 L1, L2, L3 face features [D1]
+     4 Viola-Jones + AdaBoost [D2]
+     5 Rank-level fusion (where used, what it assumes, how computed) [E5]
+O5   1 Face - feature extraction and matching (SIFT method) [D10]
+     2 Fingerprint: singular points, Poincare method [B6]
+     3 How to improve the quality of fingerprints, methods, and describe Hong's method [B11]
+     4 What are cascades, where are they used, what is Viola-Jones [D2, D3]
+     5 Iris matching, Hamming distance, normalized Hamming distance [C4]
+O6   (4 questions listed) 1 Iris normalization [C3]   2 Minutiae points [B7]   3 Cascades [D2]
+     4 Authentication types, metrics for identification [A2, A7]
+O7   1 What is ROC, how does DET differ, where to use which [A7]   2 Fingerprint: what are
+     minutiae [B7]   3 List all fusions, then he focused on the transformation-based one [E3, E4]
+     4 What does the abbreviation HOG mean and where did we use it [D7]
+     5 What are cascades and where are they used + explain Haar [D2]
+O8   1 Fingerprint: what are singular points, what are minutiae, where do both belong
+       (hierarchy), how is each detected [B2, B6, B7]   2 Matching of fingerprints [B9]
+     3 Weak classifier and AdaBoost [D2]   4 PCA [D5]
+     5 Metrics for identification, CMC ("ROC is wrong"), he also wanted AUC of the CMC [A7]
+     (the student: he is kind and corrects you if you err)
+O9   1 Biometric system design cycle (diagram of 5 phases, each described briefly) + how they
+       relate to each other [A4]   2 Fingerprint L3 features: what, where used, why [B1]
+     3 Fingerprint matching when there are very few features [B9]
+     4 Iris: textured lenses, detection approaches, which textured-lens technology leaves no
+       artefacts in the Fourier transform [C7]
+     5 LDA: description, comparison with PCA, how matching works, how to get the representation
+       back [D5]
+O10  1 Fingerprint quality assessment (where and which methods) and describe NFIQ [B10]
+     2 Kinds of fingerprint sensors; describe the most basic one (with electrodes) [B4]
+     3 Iris normalization, the whole procedure [C3]
+     4 Face bunch graph, what is a jet, how do we get it, what is a bunch; taxonomy of face
+       recognition (appearance, texture, model) [D6, D4]
+     5 CNN, AlexNet - what did we show there about the discriminativeness of the features, and
+       what is ReLU [D8, D11]
+O11  1 CNN, what is a perceptron, which layers we know, ReLU [D11]
+     2 Accuracy metric: how defined, where used, weaknesses, which other metrics [A8]
+     3 Rank method: what it is, how it works, where used [E5]
+     4 Integral image: how used and why; AdaBoost [D2]
+     5 Iris code: how we get it, what is a Gabor filter, filter size [C2]
+O12  (48/50, "professor very nice, helps and guides you if you err")
+     1 Impostor and genuine distributions: what are they, what do you know, how do they change
+       [A5, C4]   2 Positive, negative recognition; list the identification types (what is
+       deduplication) [A2]   3 Iris normalization, encoding, matching, usual values of the
+       normalized Hamming distance for impostor/genuine [C3, C4]
+     4 Where do we use cascades and why (landmark detection and Viola-Jones: describe both,
+       principle of cascades) [D2, D3]
+     5 Face taxonomy, short description of the methods of each branch (FBG in a bit more
+       detail: what is a jet, in which space do we get the Gabor coefficients, how do we get
+       jets - are they all the same size) [D4, D6]
+O13  1 HOG (where in the FR taxonomy, how it works + dense and the other one) [D7, D4]
+     2 Perceptron: what it is and how it is built [D11]
+     3 Fingerprint features and determining the minutiae direction [B1, B7]
+     4 Authentication types, identification measurements [A2, A7]
+     5 Lens detection: Fourier spectrum and texture-based methods + when we cannot see the
+       artefacts [C7]
+O14  1 How to approach detecting textured lenses (still image, sequence of images) [C7]
+     2 Feature levels for faces and fingerprints [D1, B1]   3 Majority voting [E6]
+     4 Cross validation (k-folds, leave one out) [A9]
+     5 Iris code matching process (algorithm, shifting) [C4]
+O15  1 Measures for verification [A7]   2 What are singular points and minutiae? Types, why do
+       we use them? [B2, B7]   3 Methods for improving fingerprint quality; describe precisely
+       the "2D enhancement scheme" [B11]
+     4 What is a circular shift? How does it affect the impostor and genuine distribution? [C4]
+     5 LDA [D5]
+O16  1 List the fusions (sensor level, feature level), why is the division prior-to / after
+       matching important, types of score fusion [E3, E4]
+     2 Iris normalization, how it works, why needed [C3]   3 Explain NFIQ (quite in detail) [B10]
+     4 Kinds of fingerprint sensors, explain the capacitor-based one more precisely [B4]
+     5 Boosting, where and why used (VJ) [D2]
+O17  (47/50) 1 Multibiometrics: which types, one main characteristic of each (many
+       sub-questions); at the end for multimodal "what is the main difference from the others"
+       - he wanted to hear "the others work on only 1 modality" [E2]
+     2 The word "cascade": where did we meet it (landmark detection, Viola-Jones), describe how
+       we used them in both [D2, D3]
+     3 Taxonomy of face feature extraction/matching, methods per branch + deep learning:
+       perceptron, when is a net deep, if we cut the network at different layers what do we
+       learn about how they work + the number of parameters at different layers (deeper =
+       more) [D4, D8, D11]
+     4 Fingerprint L1, what are singular points, how do we determine them (Poincare in
+       detail), Henry system [B2, B6, B12]
+     5 Iris code, why and how do we use Gabor filters, where is the mask used [C2, C3]
+O18  1 Perceptron (basic structure, what is the input, what is the output) [D11]
+     2 Fingerprint classes, relation between singular points and fingerprint classes [B2]
+     3 Minutia points, how we get them (ridge neighbours, what is the maximum number of ridge
+       neighbours and why) [B7]   4 How do we get the iris code, how many bits, demodulation [C2]
+     5 Integral image, where we use it and why, what is the advantage [D2]
+O19  1 Haar-like filter, how it is computed and used, integral image [D2]
+     2 Fingerprint level 2 and 3 [B1]   3 Auth types, metrics (curves ROC, DET, EER) [A2, A7]
+     4 Iris: how do we measure comparison/distance between them, what is the mask [C4, C3]
+     5 Multibiometrics: list good and bad properties of multimodality [E1]
+O20  1 Link between humans and CNN, perceptron, AlexNet [D8, D11]
+     2 Different metrics for the 3 different types [A7]
+     3 Taxonomy, PCA, LDA, how they work, how you compute (algorithm step by step), what they
+       tell [D4, D5]   4 Iris code - normalization [C3, C2]
+     5 Majority voting, decision fusion and all the other fusions [E6, E3]
+O21  (44/50, "friendly, helps, but really wants the description he had in mind")
+     1 Link between humans' difficulties perceiving faces and algorithmic ones, because the
+       recognition algorithm has the same problems - he wanted to hear Viola-Jones even though
+       the question mentioned recognition [D8, D2]
+     2 Borda count: what it means, where do I place it, then description, what it assumes, how
+       it decides [E5]
+     3 Singular points and minutiae - "give the words, then say as much as you can"; later also
+       the Poincare index, description, is it used for recognition or why is it good [B2, B6, B7]
+     4 Iris: how pupil dilation/constriction affects (he was thrilled that normalization was
+       mentioned), then impostor and genuine distributions - how do they change, he wanted
+       "the impostor mean decreases" (not "the whole distribution shifts a bit to the left")
+       [C5]
+     5 Cascades - again the word, then say as much as you can; sub-questions: how many
+       regressions do we put together in landmark detection, and does this approach use the
+       texture of the face [D2, D3]
+O22  (34/50, "very friendly, deducted points only if I really got stuck; bothered by the amount
+     of detail demanded for LDA")
+     1 LDA: where used (if you say it is under appearance-based in the FR taxonomy he is very
+       happy), what do we get with it, describe the procedure (what is computed and how - quite
+       some detail) [D5, D4]   2 Integral image: where used (+ where exactly in Haar) and why [D2]
+     3 Authentication types (only list), then describe negative authentication, then measures for
+       verification (ROC, AUC, DET) -> difference between ROC and DET [A2, A7]
+     4 Fingerprint quality improvement, which methods (1D smoothing, Fourier, 2SES, Hong); which
+       two work in the frequency space (Fourier and 2SES); describe the Fourier method [B11]
+     5 Iris: why Gabor filters and what do we get out of them, then how big is the iris code and
+       why [C2]
+O23  1 Fingerprint orientation field (how to get it, where used), singularity points [B5, B6]
+     2 Fingerprint alignment (Hough transform, tolerance box) [B9]
+     3 Iris image quality check methods, the sharpness method in detail [C6]   4 HOG [D7]
+     5 Face feature extractor groups, CNN in detail [D4, D8, D11]
+O24  (second term, 1-5 Feb; "overall OK and friendly, but sometimes stumbles over unimportant
+     details and wants one specific phrase out of a broad question")
+     1 "EFBG" - he says only the abbreviation, say what you know [D6]
+     2 Fingerprint quality improvement: list, describe Hong, weaknesses of Hong [B11]
+     3 Quality of eye images: list the factors, why near infrared, what matters in quality and
+       sensors (he wants "reflection of light only on the pupil, not on the iris"), effect on
+       the genuine/impostor distributions [C6, C1]
+     4 Verification errors ... when I said the equal error rate is read off the DET curve at the
+       point where the errors are equal he said "no" [A7]   5 Cascades [D2]
+     (his corrections: AdaBoost wording about weak classifiers; Haar white summed, black
+      subtracted - see D2)
+O25  1 Normalization in general (what is it, what can we normalise and why) [G1]
+     2 Fingerprint types, what is the Henry system [B2, B12]   3 Iris normalization and matching
+       [C3, C4]   4 Effect of pupil dilation on genuine and impostor distributions [C5]
+     5 Rank fusion, logistic regression [E5]
+O26  1 Iris code [C2]   2 NFIQ [B10]   3 Poincare index method [B6]   4 IPD [D1]
+     5 Rank-level fusion [E5]
+O27  1 MLBP - abbreviation, all you know; extra: how do the parameters you set (R and P) show in
+       the final result [D7]   2 Score-level fusion - roughly what it is (after matching), then
+       details of transformation-based and the things within it [E4]
+     3 Effect of pupil dilation/constriction on the procedure and quality (genuine/impostor
+       distributions); what is the next step after normalization to get the iris code [C5, C2]
+     4 Poincare - all you know, then in general about singular points and the Henry system
+       [B6, B2, B12]   5 Fingerprint enhancement - what do we even enhance, which methods, then
+       2SES in detail, which parameters do we look for in the Fourier spectrum (ridge frequency
+       and orientation) [B11]
+O28  1 Hough transform - algorithm + how to align two fingerprints [B9]
+     2 Lens detection - how Fourier works for pixelated lenses + how to detect lenses that
+       Fourier does not detect [C7]   3 Boosting - as much as possible (where, why, algorithm,
+       how weights are set, how weak classifiers are combined) [D2]
+     4 SIFT - as much as possible (where used, how it works, how long is the feature vector,
+       which two types exist) [D10]   5 Multibiometric systems - how divided, which give the
+       best results, difference between multi-modal and multi-instance, which can run in
+       parallel [E2]
+O29  1 Majority voting (where it belongs, what is fusion, how fusions differ, what is typical for
+       majority voting, which other algorithm of the course works on the majority-voting
+       principle -> Hough transform) [E6, B9]   2 Daugman's rubber sheet (why normalization,
+       size of the resulting code, how, what the mask represents) [C3, C2]
+     3 Hong's algorithm (where it belongs, as much as you can) [B11]
+     4 Viola-Jones, AdaBoost (what is VJ, how it works - moving windows, boosting in detail) [D2]
+     5 LBP (where it belongs, how it works, an example, why we use it, which other algorithm is
+       texture-based, differences and use cases) [D7, D4]
+
+WHAT THE EXAMINER REPORTEDLY WANTS (collected from the oral reports; use it as a checklist)
+ - "Say the word, then say everything you know": give a definition, where it belongs in the
+   course hierarchy, how it works, what it assumes, where used, advantages/disadvantages.
+ - Always PLACE a method in its taxonomy: LDA/PCA -> appearance-based; HOG/LBP/SIFT ->
+   texture-based; EBGM/FBG -> model-based; Borda/logistic regression -> rank-level fusion (only
+   identification); majority voting -> decision-level fusion; CMC -> identification metric.
+ - Multi-modal differs from the other four multibiometric classes: they use ONE modality.
+ - "Cascade" has two meanings: Viola-Jones (classifiers) and landmark detection (regressors).
+ - Pupil dilation: genuine distribution gets worse (HD up, FNMR up), impostor MEAN decreases a
+   little.
+ - Human difficulty with inverted faces = the Viola-Jones difficulty.
+ - Haar feature = sum over the white part minus sum over the black part.
+ - Iris sensor: specular reflection on the pupil, not on the iris.
+ - Identification is evaluated with CMC (rank-1/rank-k), verification with ROC/DET/EER/AUC.
+
+
+=====================================================================================
+2. QUESTIONS AND ANSWERS BY TOPIC
+=====================================================================================
+
+#####################################################################################
+ A. FUNDAMENTALS AND EVALUATION
+#####################################################################################
+
+-------------------------------------------------------------------------------------
+A1  Scientific facts about biometrics; suitability of a trait
+-------------------------------------------------------------------------------------
+ASKED IN: 2018 Q1 (which statements are scientific facts) ; 2017 Q5 (factors for the
+          suitability of a trait)
+
+ANSWER 2018 Q1  (a) NOT a fact   (b) NOT a fact   (c) FACT   (d) FACT   (e) FACT
+  (a) Uniqueness: the physical trait itself may not be unique, and uniqueness of the
+      modalities has not been scientifically clearly established. Evidence on the slides:
+      "Only once during the existence of our solar system will two human beings be born
+      with similar finger markings" (Harper's, 1910); "two like fingerprints would be
+      found only once every 10^48 years" (Scientific American, 1911) - claims without a
+      scientific proof. [S p.42]
+  (b) Permanence: also not an established scientific fact. [S p.42]
+  (c) Fact 1: biometric systems rely only on the digital measurements (a sensor sample ->
+      features), never on the physical trait itself. [S p.43]
+  (d) Fact 2: sensing introduces variations in the samples of the same trait of a user
+      obtained over time (pose, pressure, illumination, sensor noise, ...). [S p.43, 44]
+  (e) Fact 3: feature sets from different samples of the same trait are seldom identical
+      -> we look for a close, not a perfect, match. So two IDENTICAL feature sets are
+      suspicious: probably a replay of recorded data by an adversary. [S p.43]
+
+ANSWER 2017 Q5  Seven factors for the suitability of a physical/behavioural trait [X]
+  (Jain, Ross, Prabhakar 2004. The list is not on these slides; the solved sheet has it.)
+  1 Universality     everybody should possess the trait -> minimises failure to enroll (FTE)
+  2 Uniqueness       different persons have different traits -> FMR must stay low enough
+  3 Permanence       trait invariant over time -> otherwise high FNMR (template aging)
+  4 Measurability    (also "collectability") can be acquired and digitised with a sensor
+  5 Performance      accuracy, speed and robustness reachable (samples processed per time)
+  6 Acceptability    people are willing to present the trait (cultural/privacy issues)
+  7 Circumvention    how easily the trait can be imitated/spoofed to evade recognition
+
+-------------------------------------------------------------------------------------
+A2  Authentication types and recognition types; probe and gallery
+-------------------------------------------------------------------------------------
+ASKED IN: 2017 Q1 ; 2023 Q1
+
+ANSWER  [S p.20-22]
+ AUTHENTICATION TYPES (the TASK the system solves - what question it answers)
+  - Pair matching ......... Do these two images match?
+  - Verification (1:1) .... Does this sample of subject X match the template of X in our
+                            system? (claimed identity, one comparison)
+  - Identification (1:n) .. Does this person exist in our system / who is it? (compare to
+                            the whole gallery, no claimed identity)
+  - Negative authentication I am NOT subject X / not a member of group X.
+  - Deduplication ......... Do we have to enroll you? (is this person already enrolled?)
+ RECOGNITION TYPES (the STATUS of the subject towards the system)
+  - Positive recognition .. the sample represents a subject KNOWN to the system (already
+                            registered) - e.g. access control, verification, identification.
+  - Negative recognition .. the sample represents a subject UNKNOWN to the system (not yet
+                            registered) - e.g. watch-list search (US-VISIT: does the visitor
+                            have multiple aliases?), de-duplication (UID India: is the same
+                            person acquiring a second 12-digit number?). [S p.52-53]
+ DIFFERENCE (2023 Q1): authentication types are different operating modes / questions
+  (pair matching, 1:1, 1:n, negative, dedup); recognition types only say whether the
+  subject is expected to be in the database (positive) or not (negative). Verification
+  and identification normally serve positive recognition; negative authentication and
+  deduplication serve negative recognition.
+ PROBE = a sample presented to the biometric system. GALLERY = the collection of enrolled
+  templates. [S p.22]
+
+-------------------------------------------------------------------------------------
+A3  Enrolment vs recognition pipeline
+-------------------------------------------------------------------------------------
+ASKED IN: 2025 Q1 ; notes N10, N29
+
+ANSWER  [S p.23-28]
+   ENROLMENT:     new user -> Acquisition -> Feature extraction -> Template generation
+                  (-> template stored in the gallery/database)
+   RECOGNITION:   decision needed -> Acquisition -> Feature extraction -> Matching
+                  (probe vs template(s): 1:1 or 1:n) -> Labeling/decision (threshold tau)
+ DIFFERENCES
+  - Enrolment ENDS with a stored template; it makes no decision. Recognition has two extra
+    stages: matching (similarity/distance score) and labeling (accept/reject or identity).
+  - Enrolment is done once, usually supervised, with quality control, several measurements,
+    selection of the best samples and merging of samples (user's view, p.25). Recognition
+    happens at every access and has to be fast (speed vs security trade-off, operational
+    threshold, number of attempts, auditing - security engineer's view, p.28).
+  - Enrolment questions: is meta-data stored with the record, multiple templates per user,
+    operator supervision, how is the template stored (encryption, template protection).
+    Recognition questions: how is the template retrieved (on device / local server / cloud).
+    [S p.26, 28]
+  - Same first two steps (acquisition, feature extraction) in both; the template of the
+    enrolment is what the recognition compares against.
+
+-------------------------------------------------------------------------------------
+A4  Design cycle of a biometric system
+-------------------------------------------------------------------------------------
+ASKED IN: 2018 Q4
+
+ANSWER (sketch)  [S p.47]
+        Start
+          |
+          v
+   Understand the nature of the application   <-- performance requirements
+          |
+          v
+   Choose the biometric trait  <----------------+
+          |                                      |
+          v                                      |
+   Collect biometric data (part of it is the     |  the cycle is repeated
+   data collected during the design stage)       |  (dashed arrows back) until
+          |                                      |  satisfactory results
+          v                                      |  are obtained
+   Choose features and matching algorithm  <-----+
+     (uses prior knowledge, e.g. about the
+      uniqueness of minutiae points)
+          |
+          v
+   Evaluate the biometric system ----(not good enough)----> back to an earlier step
+          |
+          v
+         End
+ Explain: requirements decide the trait; data collected in the design stage tells how
+ distinctive the features are; evaluation (FMR/FNMR, ROC) closes the loop.
+
+-------------------------------------------------------------------------------------
+A5  Match-score distributions (ideal vs real), similarity vs distance score, threshold
+-------------------------------------------------------------------------------------
+ASKED IN: 2025 Q2 ; 2017 Q2 ; notes N24 ("... what appears because of it")
+
+ANSWER  [S p.31-39]
+ SCORES: similarity score - higher is better (match if s >= tau); distance score - lower
+  is better (0 for a self match; match if d <= tau). Both are produced in the MATCHING
+  stage of the recognition pipeline and compared with the decision threshold tau.
+  Note [S p.43]: a distance of exactly 0 against a stored template is suspicious (samples
+  of one trait are seldom identical -> possible replay).
+ IDEAL WORLD: the distribution of scores for different persons (d = impostor) and for the
+  same person (g = genuine) are WELL SEPARATED (no overlap). A threshold exists that gives
+  FMR = 0 and FNMR = 0 at the same time.
+                 frequency
+        d ____             ____ g
+         /    \           /    \          <- no overlap, tau in the gap
+        /      \         /      \
+   ----/--------\-------/--------\---- similarity
+                 tau
+ REAL WORLD: the two distributions OVERLAP (their tails cross; real histograms are not
+  even Gaussian - see the irregular genuine curve on p.39).
+                 frequency
+          d ____        ____ g
+           /    \  tau /    \
+          /      \ |  /      \     blue = false non-match (genuine below tau)
+   ------/--------\|/--------\--   red  = false match (impostor above tau)
+ PROBLEM / WHAT APPEARS BECAUSE OF IT: the decision threshold. Errors appear - false
+  matches (type I) and false non-matches (type II). The FAR and the FRR CANNOT be reduced
+  simultaneously by adjusting the threshold: raising tau lowers FMR but raises FNMR and
+  vice versa. So the operating point is a compromise chosen by the application (high
+  security -> low FMR; Disney World ticketing -> low FNMR [S p.112]); this trade-off is
+  what the ROC/DET curves and the EER describe (see A7). Extra error sources outside the
+  matcher: failure to acquire / failure to enroll. [S p.40-41]
+
+-------------------------------------------------------------------------------------
+A6  FMR, FNMR, GMR; how FNMR is calculated; problems with a high FNMR
+-------------------------------------------------------------------------------------
+ASKED IN: 2017 Q3 ; 2018 Q2 ; notes N23 (GMR GNMR - FNMR FMR), N24
+
+ANSWER  [S p.29-39]
+ DEFINITIONS (similarity scores s, threshold tau)
+  - False Match (type I): an impostor sample matched a reference template.
+  - False Non-Match (type II): a genuine sample did not match its reference template.
+  - FNMR(tau) = P(s < tau | genuine)  = (# genuine comparisons with score < tau) / (# all
+        genuine comparisons)  = integral of the genuine density from -inf to tau.
+  - FMR(tau)  = P(s >= tau | impostor) = (# impostor comparisons with score >= tau) / (# all
+        impostor comparisons) = integral of the impostor density from tau to +inf.
+  - GMR = 1 - FNMR (genuine match rate = true accept rate). "GNMR" is not a standard
+    abbreviation; read it as the genuine non-match rate = FNMR [?]. Correspondingly the
+    impostor non-match rate = 1 - FMR. FAR/FRR are the system-level synonyms of FMR/FNMR
+    (they additionally count failures to acquire).
+ "If we know the densities we integrate them, but typically we do not, so we calculate the
+  rates with a benchmark data set" - i.e. run many genuine and impostor comparisons and
+  count. [S p.35-36]
+ SKETCH: two bell curves (d left, g right), vertical line tau; the area of g to the LEFT
+  of tau is the FNMR; the area of d to the RIGHT of tau is the FMR.
+ BEHAVIOUR AS A FUNCTION OF tau [S p.38]: FMR falls from ~100 % to 0 as tau grows, FNMR
+  rises from 0 to ~100 %; they cross at the EER; "FNMR @ zero FMR" and "FMR @ zero FNMR"
+  are the end points.
+ 2018 Q2 - PROBLEMS PERTAINING TO A HIGH FNMR
+  - Causes: intra-user variations (pose, illumination, pressure, dry/wet finger, partial
+    prints, defocus, occlusion), sensor noise, change of sensor, template aging, pupil
+    dilation, failure to acquire. [S p.44, 112, 129, 115]
+  - Consequences: genuine users are rejected -> inconvenience, repeated attempts, manual
+    fallback and cost, loss of user acceptance. It is a problem above all when the
+    THROUGHPUT is large: e.g. a 1:1 verification kiosk at an airport with 5000 people per
+    hour for 14 h/day = 70 000 verifications a day; even a FNMR of 1 % means ~700 falsely
+    rejected people a day (~50 an hour) -> queues. FNMR cannot just be lowered with a
+    looser threshold because FMR (security) then rises (A5). Direct comparison of error
+    rates is valid only on the same database/sensor/environment/application. [S p.112]
+
+-------------------------------------------------------------------------------------
+A7  ROC, DET, EER, AUC, CMC; comparing systems; which graphical metric to use
+-------------------------------------------------------------------------------------
+ASKED IN: 2018 Q3 ; 2017 Q4 ; 2022-02 Q9 ; 2024-01 Q1 ; 2024-08 Q9 ; 2025 Q7
+
+ANSWER
+ ROC (Receiver Operating Characteristic) [S p.191, 193]: plots the genuine match rate
+  (1 - FNMR, TPR) against the false match rate (FPR) over ALL thresholds (the slide also
+  shows the FNMR-vs-FMR form). It describes the whole trade-off of a system and removes the
+  dependence on one chosen threshold, so two systems that use different thresholds/score
+  ranges become comparable. Curve closer to the upper-left corner = better.
+ DET (Detection Error Tradeoff) [S p.192]: FNMR (FRR) against FMR (FAR), usually on log (or
+  normal-deviate) axes; curve closer to the bottom-left corner = better; shows the low-error
+  region much more clearly than a linear ROC.
+ HOW TO COMPARE TWO SYSTEMS (2018 Q3, 2025 Q7) [S p.193]: the best way is to examine their
+  ROC curves. If the FRR of system A is consistently lower than the FRR of system B at the
+  corresponding values of FAR, then the matching performance of A is better than B.
+ EER = the point of the ROC/DET curve (threshold) where FMR = FNMR (FAR = FRR); lower EER =
+  better; a single number, but it describes only one operating point. Safest way to
+  state where it is read: on the plot of the error rates against the threshold (slide p.38)
+  it is the crossing of the FMR and FNMR curves; on a DET curve it is where the curve meets
+  the diagonal FNMR = FMR. [?] One oral-exam report (O24.4): a student who said "EER is read
+  off the DET curve where the two errors are equal" was told "no" by the examiner - the
+  reason is not recorded, so give the error-vs-threshold description above.
+ AUC (area under the ROC curve) [S p.194]: one number for the whole curve, "use when you
+  can't pick a threshold". Range 0.5 to 1 (slide scale: 0.9-1.0 excellent, 0.8-0.9 good,
+  0.7-0.8 fair, 0.6-0.7 poor, 0.5-0.6 fail). AUC = 0.5 means the curve lies on the diagonal:
+  the system has NO discriminative power - it ranks genuine vs impostor like a coin toss
+  (chance level) [W]. [!] The solved sheet calls it the "worst case"; strictly an AUC below
+  0.5 would be worse than chance (inverted scores), 0.5 is chance level.
+ THE TWO CURVES THAT INTERSECT (2022-02 Q9)
+  - Properties of the curves FMR(tau), FNMR(tau): monotone, opposite directions; FMR(tau)
+    non-increasing, FNMR(tau) non-decreasing in the similarity threshold; they cross at the
+    EER; neither can reach zero without the other going to its maximum (A5).
+  - Two ROC/DET curves crossing at one point: neither system dominates; each is better in a
+    different operating region. Compare at the operating point the application needs:
+    high-security application (low FMR) -> choose the system with the lower FNMR in the
+    low-FMR part of the DET (left of the crossing); convenience application (low FNMR
+    tolerated, higher FMR) -> choose the system with the lower FMR in the low-FNMR part
+    (right of the crossing). If no operating point is prescribed use AUC / EER as a
+    tie-break, or report FNMR at a fixed FMR (e.g. FNMR @ FMR = 0.1 %, as in the NIST iris
+    challenge). [S p.179, 182, 193]
+ WHICH METRIC FOR WHICH SYSTEM (2024-01 Q1, 2024-08 Q9) [S p.56]
+  - VERIFICATION (1:1): FMR, FNMR, EER, ROC/DET curve (graphical), AUC.
+    Graphical = ROC or DET: it shows the error trade-off over all thresholds.
+  - IDENTIFICATION (1:n): rank-1 identification rate (recognition rate), rank-k rate,
+    precision, recall; graphical = CMC (Cumulative Match Characteristic): fraction of
+    probes whose true identity is within the top-k of the ranked list, plotted against k
+    [X]. Used because identification returns a RANKED list, not a yes/no. (Oral O8.5: "CMC,
+    not ROC" - ROC is the wrong curve for identification; he also asked for the AUC of the
+    CMC, i.e. the area under the CMC curve as a single number.)
+  - DETECTION / SEGMENTATION: precision, recall, F1, IoU/Dice; graphical = precision-recall
+    curve (or ROC with number of false positives, as in the FDDB face-detection
+    benchmark [S p.248]) [X]. Preferred over accuracy because the classes are heavily
+    imbalanced (A8).
+
+-------------------------------------------------------------------------------------
+A8  What is wrong with accuracy as a detection metric
+-------------------------------------------------------------------------------------
+ASKED IN: 2023 Q2
+
+ANSWER  [X - the principle; the slides only mention sliding-window detection and FDDB]
+ Accuracy = (TP + TN) / (TP + TN + FP + FN). In detection with a sliding window almost
+ all windows are negatives, so the classes are extremely imbalanced and accuracy is
+ dominated by the majority class.
+ EXAMPLE: an image with 11 faces and 1000 non-face windows. A "detector" that always
+ answers "no face" is correct on 1000 of 1011 windows = 98.9 % (~99 %) accurate, yet it
+ finds 0 faces (recall 0). A real detector that finds 10 of the 11 faces but also
+ raises 20 false alarms has TP = 10, FP = 20, FN = 1, TN = 980 -> accuracy 97.9 %, LOWER
+ than the useless detector. [!] (the solved sheet's numbers for this example are garbled)
+ MORE SUITABLE: precision = TP / (TP + FP) (how many detections are real faces), recall =
+ TP / (TP + FN) (how many faces were found), F1 = 2PR / (P + R); or the precision-recall /
+ ROC curve over the detector threshold. They ignore the huge TN count.
+
+-------------------------------------------------------------------------------------
+A9  Cross-validation; validation protocols
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-01 Q6 ; notes N22 (cross-validation), N25 (validation protocols)
+
+ANSWER  [S p.56, 200 ; X]
+ CROSS-VALIDATION (k-fold):
+  1. Split the labelled data set of N samples into k disjoint folds of about N/k samples.
+  2. For each fold i = 1..k: train the model on the other k-1 folds, test (validate) it on
+     fold i. (k training sessions, each on N - N/k samples.)
+  3. Average the k results and report mean and standard deviation (slide: "5-fold cross
+     validation: means and standard deviations").
+  Example: 10-fold -> 10 trainings, each with 90 % of the data, each sample is used for
+  testing exactly once.
+  LEAVE-ONE-OUT (oral O14.4) = the extreme case k = N: N trainings, each on N-1 samples,
+  tested on the single left-out sample (for biometrics: leave one SUBJECT out). Nearly
+  unbiased and uses the most training data, but the most expensive and with a high-variance
+  estimate [X].
+ WHY: it estimates how the trained model GENERALISES to unseen data (detects overfitting),
+  is far more reliable than a single train/test split because every sample is used for
+  both training and testing, gives an error bar, and is used to tune hyper-parameters.
+ BIOMETRIC NUANCE: the folds must be PERSON-DISJOINT (all samples of one subject in the
+  same fold); otherwise the same person is in training and testing and the result is
+  too optimistic. The slides use "person-disjoint 10-fold cross-validation" for contact-lens
+  detection. [S p.200]
+ VALIDATION PROTOCOLS (why they matter): needed for sound comparisons of techniques and for
+  repeatability. A protocol defines the procedure, metrics, databases and frameworks. The
+  slides' example (AWE database + toolbox) [S p.56]: partition the data into a development
+  set (60 % of the images) and a test set (40 %); 5-fold cross-validation (means and
+  standard deviations); bootstrapping on the test set (means and standard deviations);
+  files with the lists for the experiments are distributed with the dataset; metrics: ROC
+  and EER for verification, CMC and Rank-1 for identification.
+
+#####################################################################################
+ B. FINGERPRINT
+#####################################################################################
+
+-------------------------------------------------------------------------------------
+B1  Three levels of fingerprint features
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-02 Q1 ; 2018 Q5 (first part) ; 2020 Q7 (linking) ; note N26
+
+ANSWER  [S p.61-63, 69-71, 77-78]
+ LEVEL   FEATURES                                    RESOLUTION   WHAT IT IS / USE
+ L1      orientation field (ridge flow), ridge       250 ppi      global shape and structure
+         frequency and SINGULAR POINTS (loop, delta)              of the ridge pattern; exact
+                                                                  position/shape of single
+                                                                  ridges is ignored; used for
+                                                                  classification/indexing and
+                                                                  as alignment landmark (core)
+ L2      ridge SKELETON and MINUTIAE (location       500 ppi      most discriminative, compact
+         where a ridge emerges/ends, splits or                    (storage efficient) and
+         merges; each with direction and type)                    reasonably robust; what
+                                                                  commercial AFIS matchers use.
+                                                                  At 500 ppi adjacent ridges
+                                                                  are ~9 pixels apart [p.113]
+ L3      ridge CONTOUR (edges), sweat PORES (inner   1000 ppi     ridges are no longer 1-pixel
+         holes), dots, incipient ridges                           skeletons; important for
+                                                                  fingermarks (latents) that
+                                                                  contain few minutiae
+ MAIN DIFFERENCES: they differ in (1) what is described - coarse global flow vs. local
+ points vs. fine details, (2) required sensor resolution (250 / 500 / 1000 ppi), (3)
+ distinctiveness (L1 low, L2 high, L3 extra evidence) and (4) use (L1 classification and
+ alignment, L2 matching, L3 poor-quality/latent matching).
+ NOTE: minutiae count varies with acquisition: rolled ~136, plain ~56, fingermark ~18 on
+ average. [S p.71] Ridge density: ~20.7 ridges/cm (young male), ~23.4 ridges/cm (female). [p.57]
+ L3 - WHAT, WHERE USED, WHY (oral O9.2, O19.2): what = pores (inner holes), edges/ridge
+ contour, dots, incipient ridges (immature, thinner, no pores); where used = matching of
+ FINGERMARKS/latents, which contain far fewer minutiae (avg ~18, NIST SD27: 5..82) than
+ rolled or plain prints, and as extra evidence for good prints; why = with so few L2
+ features the L2 evidence alone is too weak, so L3 adds discriminative information. Needs
+ 1000 ppi. Open problem: how to reliably ENCODE and MATCH L3 features in poor-quality
+ fingermarks (state-of-the-art extractors fail -> semi-manual extraction). [S p.77-78, 126-128]
+
+-------------------------------------------------------------------------------------
+B2  Singular points, pattern types, number of singular points; linking the terms
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-01 Q3 ; 2017 Q6 ; 2018 Q5 ; 2020 Q7 ; 2024-08 Q1 (SP part)
+
+ANSWER  [S p.64-68, 94]
+ SINGULAR POINTS: salient locations where the ridge orientations change abruptly. Two
+  basic types: LOOP (the core is the north-most loop-type SP, used as a landmark to align
+  the print) and DELTA (triangular ridge meeting point). If a print has no SP the "core"
+  is the point of maximum ridge curvature.
+ SPs are an abstract representation of the orientation map (the map can be roughly
+  predicted from number and location of SPs); an even better abstraction is the PATTERN
+  TYPE (fingerprint class), deduced from the NUMBER of loops and deltas and the SPATIAL
+  RELATIONSHIP between them.
+ PATTERN TYPES, number of singular points, and frequency on the slide
+    0 SP ...... plain arch                                         (4 %)
+    2 SP ...... 1 loop + 1 delta:  tented arch (3 %), left loop, right loop
+                (left + right loops together 65 %)
+    4 SP ...... 2 loops + 2 deltas: whorl (24 %), twin loop (4 %)
+   (PCASYS classifies into six classes: arch, left loop, right loop, tented arch, whorl,
+    scar [S p.67].)
+ The types that depend on the spatial relationship of ONE loop and ONE delta: tented arch
+  (loop and delta lie almost vertically above each other), left loop, right loop (delta
+  on the side opposite to the loop opening). Types with TWO loops and TWO deltas: whorl
+  (the two cores close together/spiral) and twin loop (two separate loops side by side).
+ 2017 Q6: majority of prints = LOOPS (65 % on the slide; the left loop is the most frequent
+  single class [X]). Expected number of SPs in a fingerprint: 0, 2 or 4.
+ 2022-01 Q3 (ROLLED prints): on rolled prints we can observe ALL pattern types, because a
+  rolled print is a complete impression (nail to nail), so all singular points are visible
+  (classification "requires the fingerprint to be complete, i.e. a good-quality rolled
+  fingerprint"). Plain impressions/fingermarks are partial, so their class is treated as
+  unknown and fingermarks are searched against all types. From the number of SPs:
+  0 -> plain arch; 2 -> tented arch OR left OR right loop; 4 -> whorl OR twin loop; the
+  spatial relationship then separates the classes inside each group.
+ 2020 Q7 - LINKING singular points, pattern type, minutiae, resolution: L1 features = the
+  singular points; they are an abstract representation of the orientation field, and the
+  pattern type is an even more abstract description built from the number/arrangement of
+  loops and deltas. Both are visible in LOW-resolution images (250 ppi). With a higher
+  resolution sensor (500 ppi) we can analyse L2 features, the minutiae, which carry much
+  more discriminative information and are used for matching; at 1000 ppi also L3 (pores,
+  contours). So resolution decides which level of the hierarchy is observable.
+
+-------------------------------------------------------------------------------------
+B3  Tenprint card
+-------------------------------------------------------------------------------------
+ASKED IN: 2023 Q3
+
+ANSWER  [S p.58-60, 71]
+ A tenprint card holds the fingerprints of all ten fingers:
+  - TOP: two rows of five ROLLED impressions (nail to nail). Row 1 = right hand, thumb to
+    little finger (1 thumb, 2 index, 3 middle, 4 ring, 5 little); row 2 = left hand, thumb
+    to little finger (6-10).
+  - BOTTOM: PLAIN impressions acquired simultaneously: left four fingers together, left
+    thumb, right thumb, right four fingers together.
+  - Rolled prints show the whole ridge area (more minutiae: ~136 vs ~56 on plain prints)
+    and are used for the database/search; the simultaneous plain prints serve as a check of
+    finger order/sequence and as a second, undistorted-by-rolling impression.
+  - Context: AFIS (e.g. Michigan State Police: 3.2 million tenprint cards, 700 000+ searches
+    per year). Latent prints/fingermarks from crime scenes are searched against such cards.
+
+-------------------------------------------------------------------------------------
+B4  Fingerprint sensors (FTIR in detail, ultrasound in detail)
+-------------------------------------------------------------------------------------
+ASKED IN: 2018 Q6 ; 2022-02 Q2 ; note N1
+
+ANSWER  [S p.79-84]  - five live-scan technologies (+ swipe sensors)
+  1 Optical FTIR-based sensor
+  2 Capacitance-based sensor
+  3 Ultrasound reflection-based sensor
+  4 Piezoelectric effect-based sensor
+  5 Temperature differential-based sensor
+
+ OPTICAL FTIR (Frustrated Total Internal Reflection) - sketch and image formation [S p.79]
+          LED (light source)
+              \  (light enters the prism at a defined angle)
+        +------\--------------------+
+        |  glass | prism / platen    |   <- finger touches the top surface
+        |   valley   ridge  valley   |
+        |     \       /\      /      |
+        |      \_____/  \____/       |
+        +--------\-----------\-------+
+        total internal       ridge touching glass: total internal
+        reflection at a      reflection is FRUSTRATED -> light is
+        valley (air gap)     absorbed / randomly scattered
+              |
+              v  reflected light --> lens --> CCD/CMOS camera --> image
+  How the image is made: the finger is placed on the glass platen. The LED light hits the
+  glass-air boundary at an angle above the critical angle. Under a VALLEY there is air, so
+  the light is totally internally reflected and travels on to the lens and camera. Where a
+  RIDGE touches the glass, the skin couples the light out (total internal reflection is
+  "frustrated"): the light is absorbed/randomly scattered and little reaches the camera. The
+  camera therefore records a gray-scale image with dark ridges on a bright background of
+  valleys [W: ridges dark, valleys bright - the optics source confirms the mechanism; the
+  "dark ridges" consequence is an inference].
+  Disadvantages: difficult to have this arrangement in a compact form (the focal length of
+  small lenses can be very large); image distortions are possible when the reflected light is
+  not focused properly. [S p.79]
+
+ CAPACITANCE-BASED [S p.80]: the most commonly used; very small in size; an array of
+  electrodes; the fingerprint skin is the other electrode of a miniature capacitor; the
+  charge depends on the distance to the plate, so the capacitance under a ridge is higher
+  than under a valley; proper grounding is needed because of electrostatic discharges.
+
+ ULTRASOUND REFLECTION-BASED [S p.81]: sends acoustic signals toward the fingertip and
+  captures the echo signal; from the echoes it computes a RANGE image. Acoustic energy is
+  reflected at every change of acoustic impedance: at a ridge in contact with the platen
+  and at a valley (air gap) the echo differs in strength and time of flight, so ridge and
+  valley positions are recovered. It images the SUBSURFACE of the fingertip, too. Pros:
+  resilient to dirt and oil accumulations. Cons: expensive.
+
+ PIEZOELECTRIC [S p.82]: pressure-sensitive; a mechanical stress produces a small
+  electrical current (piezoelectric effect); does not capture the structure accurately
+  because of its low sensitivity.
+ TEMPERATURE DIFFERENTIAL [S p.83]: pyro-electric material producing a current from
+  temperature differences (lasts ~100 ms); sensor kept hot by electrical heating; only
+  4-bit gray scale (Atmel 2005).
+ SWIPE sensors [S p.84]: software stitching of the strips; may produce artifacts -> not
+  acceptable for forensic quality; cheaper (consumer electronics).
+
+-------------------------------------------------------------------------------------
+B5  Fingerprint feature extraction at levels 1 and 2 (sequence of steps)
+-------------------------------------------------------------------------------------
+ASKED IN: 2023 Q4 ; (orientation-field details for B6)
+
+ANSWER  [S p.85-100]  Commercial systems use L1 and L2 features.
+   fingerprint image
+        |
+        v
+   (1) ridge ORIENTATION and FREQUENCY estimation (per local block)
+       - model the local ridge pattern as a cosine wave (amplitude, frequency, orientation);
+         take its 2D FFT; the maximum of the magnitude spectrum gives the wave parameters
+       - ridges are not exact cosines -> the FT gives a pair of blurred impulses, so the
+         magnitude spectrum is first smoothed with a low-pass filter and then the maximum
+         is detected
+       - orientation is defined mod pi, so averaging 1 deg and 179 deg must give 0 deg, not
+         90 deg -> smooth with the vector field V = (cos 2theta, sin 2theta); creases are
+         suppressed by the smoothing
+        |
+        +--------> L1: (2) SINGULARITY extraction (Poincare index) -> loops, deltas, core
+        |              (+ direction of singularity) -> (3) PATTERN-TYPE classification
+        |
+        v   L2:
+   (4) ENHANCEMENT (filtering the ridges with the estimated orientation/frequency)
+   (5) BINARIZATION: global threshold (Otsu) or locally computed thresholds
+   (6) THINNING (morphological) -> ridges one pixel wide (ridge skeleton)
+   (7) MINUTIAE EXTRACTION: count ridge-pixel neighbours (1 = ending, 3 = bifurcation)
+   (8) MINUTIAE DIRECTION: trace the ridge(s) a fixed distance
+   (9) MINUTIAE FILTERING: remove spurious minutiae
+        |
+        v
+   template (x, y, direction, type, quality of each minutia)  -> matching (B9)
+
+-------------------------------------------------------------------------------------
+B6  Singularity extraction and the Poincare index
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-02 Q10 ; 2025 Q9
+
+ANSWER  [S p.91-93]
+ POINCARE INDEX = the cumulative change of orientation along a CLOSED path in an
+  orientation field; generally evaluated on the eight neighbours of a pixel (the 3x3 ring
+  around it). WHERE USED: for the extraction of singular points (loops, deltas, whorls) in
+  fingerprints - it is the L1 singularity-detection method.
+ PROCEDURE (sketch: a ring of 8 small oriented bars around a pixel)
+  1. Select an orientation for one element of the ring (e.g. the first one).
+     (Use as input the smoothed orientation field of B5.)
+  2. For each remaining element choose, among the equivalent orientations (orientation is
+     only defined mod 180 deg), the one CLOSEST to the neighbouring element, i.e. each
+     step difference lies in (-90, +90] degrees.
+  3. Travel once around the closed curve and sum up the rotations.
+  RESULT p: 0 deg = no singular point; 180 deg = loop (core); -180 deg = delta; 360 deg =
+  whorl. [S p.92]  (Sign conventions differ between textbooks, the slide values above are
+  the ones to give [W].)
+ FULL METHOD (2022-02 Q10): orientation field estimation (gradient or FFT per block) ->
+  smoothing of the field (cos 2theta, sin 2theta) so that noise does not create false
+  points -> compute the Poincare index at every (block) position -> loop/delta/whorl by the
+  value -> optionally determine the DIRECTION of each singularity by comparing the local
+  orientation field with a reference orientation field of a loop/delta (the field around a
+  true SP is a rotated version of the reference; alpha = rotation) - not strictly needed
+  for classification, "but helps" -> use the SPs to classify the pattern (B2) and as
+  alignment landmarks. Weakness: noisy/low-quality images give false singularities [W].
+
+-------------------------------------------------------------------------------------
+B7  Minutiae: what they are, types, extraction from a skeleton, direction
+-------------------------------------------------------------------------------------
+ASKED IN: 2017 Q7 ; 2020 Q10 ; 2022-01 Q2 ; 2024-01 Q2 ; 2024-08 Q1 (minutiae part) ; N26
+
+ANSWER  [S p.69-71, 95-99]
+ WHAT: minutiae are the locations where a ridge EMERGES/ENDS, SPLITS or MERGES with another
+  ridge (ridge characteristics). They are an abstract representation of the ridge
+  skeleton, capture much of the discriminative information, are storage-efficient and
+  reasonably robust to degradations; visible at ~500 ppi (L2 feature). Each minutia has
+  a location (x, y), a DIRECTION and a TYPE.
+ TYPES: ridge ENDING and ridge BIFURCATION (the two basic types). [X: finer types exist -
+  dot/island, lake, spur, crossover - but templates normally store only these two.]
+ EXTRACTION from a binarised, thinned (one-pixel-wide) image (sketch: 3x3 windows)
+    ending           ridge              bifurcation
+    . . .            . . X              X . X
+    . X .            . X .              . X .
+    . X .            X . .              . X .
+   1 neighbour     2 neighbours        3 neighbours
+  For every ridge pixel count the ridge pixels in its 8-neighbourhood:
+   - exactly 1 ridge neighbour -> RIDGE ENDING (minutia)
+   - exactly 2 ridge neighbours -> an ordinary ridge pixel, NO minutia
+   - exactly 3 ridge neighbours -> RIDGE BIFURCATION (minutia)
+  (Equivalent crossing-number form [X]: CN = 1/2 * sum |P_i - P_(i+1)| around the ring;
+  CN = 1 ending, 2 ridge, 3 bifurcation, 4 crossing.)
+ DIRECTION [S p.98]:
+  - ENDING: trace the associated ridge to a fixed distance (say 10 pixels); the minutia
+    direction is the angle of the line from the minutia to the traced point.
+  - BIFURCATION: obtain three points by tracing the three ridges (branches) to a fixed
+    distance; take the directions of the three branches and compute the MEAN of the two
+    directions whose difference is the SMALLEST of the three. [!] (the solved sheet only
+    says "mean of both")
+  The direction convention should comply with ISO/IEC 19794-2:2011. [S p.99]
+ Afterwards the spurious minutiae are filtered (B8).
+ MAX NUMBER OF RIDGE NEIGHBOURS (oral O18.3): 3. After thinning every ridge is one pixel
+  wide, so a ridge pixel has 2 neighbours on a plain ridge, 1 at an ending, and at a
+  bifurcation the ridge splits into two branches -> 3 neighbours. More than 3 does not
+  occur in a correctly thinned skeleton (a crossing would give 4, but is not a minutia type
+  that is stored) [X: reasoning; the slide only gives 1 / 2 / 3].
+
+-------------------------------------------------------------------------------------
+B8  Removing spurious minutiae
+-------------------------------------------------------------------------------------
+ASKED IN: note N2 ("How do we remove spurious minutiae points. Draw and describe.")
+
+ANSWER  [S p.100, 73 ; W for the artefact types]
+ Spurious (false) minutiae are produced by noise, creases, scars, dry/wet fingers and the
+ thinning itself (breaks, spurs, holes, bridges). They would add wrong points to the
+ template, so they are removed in the MINUTIAE FILTERING step.
+ HEURISTIC METHODS (slide):
+  1 remove minutiae located at the BOUNDARIES of the print / segmented area (border effect
+    - the ridge is only cut by the image edge);
+  2 remove minutiae that are CLOSE IN LOCATION and almost OPPOSITE IN DIRECTION (typical
+    for a ridge break - two endings facing each other - and for a short ridge/spur/island);
+  3 remove regions with TOO MANY minutiae in a small neighbourhood (noisy area).
+ DUALITY OF MINUTIAE: process the POSITIVE (ridge) and the NEGATIVE (valley) image at
+  the same time. A true ridge ending is a bifurcation of the valleys and vice versa, so a
+  true minutia is found in both images and a spurious one (an artefact of binarisation/
+  thinning) is not.
+ SKETCH (ridges as lines):
+   ridge break           spur / spike         hole / island        bridge
+   ---->   <----         ----+----            ----+====+----       ----+----
+   two facing endings    short branch         two bifurcations     ----+----
+   -> remove both        -> remove the        close together       two bifurcations
+                         ending+bifurc.       -> remove both       facing -> remove
+ In NIST's MINDTCT the filtering is part of the detector, which also gives each remaining
+  minutia a quality score. [S p.73]
+
+-------------------------------------------------------------------------------------
+B9  Alignment and matching of minutiae; parameters; non-linear deformation; pseudo-code
+-------------------------------------------------------------------------------------
+ASKED IN: 2024-08 Q2 ; 2025 Q3
+
+ANSWER  [S p.101-110]  Matching = 1. ALIGNMENT  2. CORRESPONDENCE (pairing)  3. SCORE
+ 1 ALIGNMENT (registration): determine the geometric transformation between the template
+  and the query minutiae sets so that they lie in the same coordinate system.
+  - A RIGID transformation is normally sufficient. PARAMETERS: translation (delta-x,
+    delta-y) and rotation (delta-theta) - a "linear mapping"; (optionally scale as a 4th
+    parameter - an extra dimension in the accumulator array).
+  - Estimated with the generalized HOUGH TRANSFORM: every pair (template minutia, query
+    minutia) votes for the transformation that would map one onto the other; the cell of
+    the 3D accumulator (dx, dy, dtheta) that receives the MOST VOTES is the alignment.
+    Useful modifications: scale dimension, weighted increment of the neighbouring cells,
+    easy parallelisation, coarse-to-fine search. [p.103-106]
+  - NON-LINEAR DEFORMATIONS (skin elasticity, pressure) are compensated for with a
+    TOLERANCE "BOX" - the distance and angle tolerances in the pairing step; they are not
+    modelled explicitly. [p.103] (Elastic models such as thin-plate splines also exist [X].)
+  - If the overlap contains very few minutiae (fingermarks): use a minutia descriptor =
+    a central minutia and its neighbourhood, pair the neighbours, and multiply the
+    percentages of matched minutiae (e.g. 6/8 * 6/7 for a true match, 3/8 * 3/7 for a
+    wrong one). [p.107]
+ 2 PAIRING: minutia a (template) corresponds to b (query) if their DISTANCE is within a
+  predefined threshold (e.g. 15 pixels) AND the ANGLE between their directions is within
+  another threshold (e.g. 20 degrees); each minutia may be matched to AT MOST ONE minutia
+  of the other set (two flag arrays). [p.108]
+ 3 SCORE: number of paired minutiae; or percentage of matched minutiae in the overlap area;
+  or number of paired minutiae divided by the average number of minutiae in both sets;
+  then compare with a threshold -> genuine / impostor (two-class decision). [p.110]
+ PSEUDO-CODE (from p.109, query set already aligned with the transformation parameters)
+   input : template minutiae T = {(x_i, y_i, th_i)}, i = 1..M
+           query minutiae   Q = {(x_j, y_j, th_j)}, j = 1..N   (after alignment)
+           distance threshold t_d, rotation threshold t_r
+   output: list of paired minutiae
+   set flag arrays fT[1..M] = 0, fQ[1..N] = 0 ; count = 0 ; list = empty
+   for i = 1 .. M
+     for j = 1 .. N
+       if fT[i] == 0 and fQ[j] == 0
+          and distance(T_i, Q_j) < t_d
+          and |rotation(T_i, Q_j)| < t_r then
+            fT[i] = 1 ; fQ[j] = 1 ; count = count + 1 ; list[count] = (i, j)
+   return list           ( score = count / ((M + N) / 2), compare with the threshold )
+ EXAMPLES: Bozorth3 (NBIS, FBI): rotation/translation invariant; stores the relative
+  positions of minutiae PAIRS, builds a compatibility table with distance/angle tolerances
+  and clusters compatible pairs; higher score = more likely the same finger. Commercial
+  VeriFinger: 31 matched minutiae -> score 614; 6 matched -> score 7. [p.75-76, 111]
+
+-------------------------------------------------------------------------------------
+B10  Fingerprint image quality: taxonomy, NFIQ / NFIQ 2, improving the quality
+-------------------------------------------------------------------------------------
+ASKED IN: 2018 Q7 ; note N28
+
+ANSWER  [S p.113-125]
+ QUALITY FACTORS: image resolution (500 ppi; cheaper civilian sensors < 500 ppi), finger
+  area (rolled vs swipe), clarity of the ridge pattern (dry finger -> broken ridges, moist
+  finger -> joined ridges, creases, virtual ridges). Quality predicts recognition
+  performance, so it is assessed to accept/reject/re-acquire a sample.
+ TAXONOMY of quality-evaluation algorithms [?: no taxonomy figure could be recovered from
+  the slide text; this is the version of the solved sheet, in line with how the literature
+  groups the methods]:
+        QUALITY EVALUATION
+        /                    \
+   LOCAL properties        GLOBAL properties
+   (block-wise)            (whole image)
+   - local ridge orientation   - orientation/direction-field continuity
+   - Gabor filter responses    - uniformity of the ridge-frequency field
+   - pixel intensity           - feature counting (e.g. number of minutiae)
+   - power spectrum
+        \                    /
+         NFIQ combines local and global properties
+ NFIQ (NIST Fingerprint Image Quality, 2004) [S p.118-119]: open source; the minutiae
+  detector MINDTCT gives the minutiae points and a LOCAL quality map (each 8x8 block rated
+  4 = best ... 0 = background; the block quality is derived from local image conditions -
+  MINDTCT's low-contrast, low-flow and high-curvature maps [S p.74], and from ridge density
+  and clarity, dominant block orientation, intensity); from the minutiae (each with its
+  own quality) and the quality map an 11-value FEATURE VECTOR is built; a 3-layer NEURAL
+  NETWORK classifies it into ONE global quality value 1 (excellent) ... 5 (poor). The value
+  predicts recognition performance; registration with only class 1 and 2 quality is
+  acceptable. (NFIQ thus combines LOCAL and GLOBAL properties.)
+ NFIQ 2 (since 2010/2016; v2.3 Oct 2024) [S p.121-125]: removes NFIQ's weaknesses (single
+  point of failure -> more feature extractors; more robust -> random forest; wider quality
+  range); reference implementation of ISO/IEC 29794-4. Features (local with a sliding
+  window, global, minutiae from FingerJetFX) -> fixed-length vector (69 values, histograms)
+  -> RANDOM FOREST of 100 binary classifiers trained on class 0 = excellent (NFIQ 1) and
+  class 1 = poor (NFIQ 5); quality score = number of trees voting for class 0 -> 0..100
+  (higher = better). Best on contact optical sensors; questionable on contactless sensors
+  and forensic fingermarks.
+ IMPROVING THE QUALITY (note N28) [?: the wording is ambiguous; two readings]
+  (a) improve the image = ENHANCEMENT: estimate the local ridge ORIENTATION and FREQUENCY
+      (block FFT, smoothed, see B5), then filter each block with a Gabor-type filter
+      tuned to that orientation/frequency [X] -> breaks are joined, merged ridges separated,
+      noise suppressed -> better binarisation/thinning and fewer spurious minutiae. This
+      is the one method to describe.
+  (b) improve the sample = measure quality (NFIQ 2) and RE-ACQUIRE/reject poor ones, select
+      the best samples at enrolment, merge several samples (multi-sample, E2). [S p.25, 350]
+
+#####################################################################################
+ C. IRIS
+#####################################################################################
+
+-------------------------------------------------------------------------------------
+C1  Iris acquisition: resolution, near-infrared light; the comparison operator
+-------------------------------------------------------------------------------------
+ASKED IN: 2017 Q8 ; 2023 Q5
+
+ANSWER  [S p.139, 144-145, 162-163]
+ - Most iris recognition systems expect 100 to 200 PIXELS ACROSS THE IRIS in the radial
+   direction (image typically 640 x 480 monochrome, captured with near-IR light).
+ - NEAR-IR illumination because it allows usable TEXTURE imaging even for DARK irises (in
+   visible light a dark iris looks almost uniformly dark; pigment is largely transparent in
+   NIR); the capture is also less disturbed by visible-light reflections [X].
+ - FUNDAMENTAL OPERATOR to compare iris codes: bitwise XOR -> the (normalised, masked)
+   HAMMING DISTANCE = fraction of disagreeing bits (C4).
+
+-------------------------------------------------------------------------------------
+C2  How big is the iris code and why
+-------------------------------------------------------------------------------------
+ASKED IN: 2018 Q8 ; 2024-08 Q3 ; note N3
+
+ANSWER  [S p.156-160]
+ The standard commercial iris code is 2048 bits (256 bytes), accompanied by a 2048-bit
+ MASK.
+ WHY: a 2D Gabor filter is applied at M x N grid points of the normalised iris image; each
+ filter response is a point in the complex plane. It is demodulated, and the PHASE is
+ quantised into 4 levels (one per quadrant), i.e. 2 BITS per sample point (the signs of the
+ real and imaginary part). 2048 / 2 = 1024 sample points in the iris; 1024 = 8 radii x 128
+ angular samples is a plausible sampling configuration. The mask has one bit per code bit
+ and marks the bits that are unusable (eyelids, lashes, reflections).
+ GABOR FILTER (oral O2.3, O11.5, O17.5, O22.5)  [S p.156-161]: a 2D Gabor filter = a complex
+  sinusoidal wave under a 2D Gaussian window; its parameters are the CENTRE POSITION, the
+  EFFECTIVE WIDTH and LENGTH of the Gaussian window (= the filter SIZE) and the WAVE
+  DIRECTION with a spatial FREQUENCY. It is applied (convolution) at M x N grid points of the
+  normalised iris image. WHY Gabor: possible relevance to human vision - Daugman: "different
+  members of this optimal filter family are an excellent description of the 2D neural
+  receptive fields found in the visual cortex" - and good theoretical properties (best joint
+  localisation in space and frequency). WHAT WE GET OUT: one complex number per location
+  (a point in the complex plane); DEMODULATION compresses the data: only the sign of the
+  real and of the imaginary part (the PHASE quantised to the four quadrants) is kept = 2
+  bits per location. Next step after normalisation: this Gabor filtering/phase quantisation
+  gives the iris code (O27.3).
+ Size trade-off [X]: 2048 bits are compact (fast XOR comparison, small template) and contain
+ enough independent information: Daugman's impostor HD distribution is a binomial with p =
+ 0.5 and only ~249 independent degrees of freedom (the bits are correlated) [W], which
+ already gives astronomically small false-match rates.
+
+-------------------------------------------------------------------------------------
+C3  Iris normalisation (rubber sheet) and the noise mask
+-------------------------------------------------------------------------------------
+ASKED IN: 2020 Q9 ; 2022-01 Q5 ; 2025 Q5 ; note N30
+
+ANSWER  [S p.154-155, 147-153]
+ WHY NORMALISE: the iris image differs in size between images, subjects, sensors and
+  imaging distances; the main concern is the pupil DILATION <-> CONTRACTION, which
+  stretches or compresses the visible iris annulus. Without normalisation the same iris
+  would give different codes. Normalisation maps the iris to a fixed-size frame.
+ HOW: Daugman's RUBBER SHEET MODEL - the imaged iris (the annulus between the pupillary
+  and the limbus boundary) is linearly stretched or compressed to a standard-size
+  rectangular frame in polar coordinates: angle theta (0..2pi) along one axis, normalised
+  radius r (0 at the pupil boundary .. 1 at the iris/sclera boundary) along the other.
+  [X: x(r,theta) = (1-r) x_pupil(theta) + r x_limbus(theta), same for y; because the two
+  circles are usually NOT concentric the mapping is done along each ray between the two
+  boundary points.] The result is invariant to pupil size, centre position and image
+  scale; a rotation of the eye only becomes a circular shift of the frame (handled at
+  matching, C4).
+ WHY A MASK: the NOISE MASK records the locations of undesired iris occlusions - eyelids,
+  eyelashes, shadows, specular reflections. Those pixels carry no iris texture, so the
+  corresponding code bits are masked out (marked 0, iris = 1) and are NOT used in the
+  Hamming distance (only bits valid in both masks count). Otherwise noise would influence
+  feature extraction/matching and raise the HD of genuine pairs. Segmentation that finds the
+  boundaries: integro-differential operator (circular edge detector), eyelid parabola
+  fitting, near-vertical edges for eyelashes. [S p.147-152]
+
+-------------------------------------------------------------------------------------
+C4  Iris matching: Hamming distance, genuine/impostor distributions, head tilt (rotation)
+-------------------------------------------------------------------------------------
+ASKED IN: 2024-01 Q3 ; 2024-01 Q4
+
+ANSWER 2024-01 Q3  [S p.162-164, 180]
+ METRIC: the HAMMING DISTANCE (normalised or weighted), on codes and masks (C1/C3):
+   HD = || (codeA XOR codeB) AND maskA AND maskB || / || maskA AND maskB ||
+  = the fraction of bits that differ, counted only over bits that are iris (mask 1) in
+  both. 0.0 = no difference, 1.0 = totally different, 0.5 = random agreement.
+ DISTRIBUTIONS: the IMPOSTOR distribution is narrow and centred near 0.5 (bits of
+  different irises agree by chance: binomial, slightly below 0.5, e.g. 0.4666 and 0.4708 in
+  the slide's example); the GENUINE distribution lies at much lower HD (e.g. 0.2717 for two
+  samples of the same eye), is broader with a longer tail towards higher HD (noise,
+  occlusion, defocus, dilation, misalignment). So the impostor distribution has a higher HD
+  than the genuine one, the two are well separated and a threshold gives very low error
+  (prototype: HD threshold 0.427 -> FRR 11.58 % at FAR 0 %, CASIA v1; NIST ICE 2006:
+  FNMR 1.1-1.4 % at FMR 0.1 %). [S p.179-182]
+ TYPICAL VALUES (oral O12.3): genuine pairs ~0.1-0.3 (0.27 in the example above; means of
+  0.19-0.26 for similar pupil sizes [S p.187]); impostor pairs ~0.45-0.5 (means 0.427-0.448
+  in the slides' dilation experiment [S p.188]; theoretical 0.5); the threshold lies between
+  (the prototype used 0.427). MATCHING PROCESS (oral O14.5): normalised masked HD for every
+  circular shift of the code (see below), the minimum is kept and compared with the threshold.
+ANSWER 2024-01 Q4 - HEAD TILT  [S p.165-166]
+ - WHAT: we ROTATE the iris codes: to account for varying head tilt (rotation of the eye
+   image) the code is circularly shifted in the angular direction.
+ - HOW: the metric (HD) is computed for a RANGE of circular bit shifts (each angular
+   sample = 2 bits, so a shift of one sample = 2 bits) to the left and to the right and the
+   MINIMUM HD over all shifts is kept.
+ - ADVANTAGE: corrects the AUTHENTIC distribution - genuine pairs that were rotated relative
+   to each other no longer look different, so the genuine HDs move to lower values (fewer
+   false non-matches).
+ - DISADVANTAGE: increases the MATCHING TIME (HD computed once per shift) and CHANGES the
+   IMPOSTOR distribution: taking the minimum over several comparisons pulls impostor HDs
+   down and makes the peak narrower/higher (the figure shows the impostor peak moving from
+   ~0.5 to ~0.46 with 3, 6, 9 shifts), so the distributions approach each other a little
+   (slightly higher FMR for the same threshold).
+
+-------------------------------------------------------------------------------------
+C5  Pupil dilation, its influence, and iris aging
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-02 Q3 ; 2023 Q6 ; note N4 (dilation with age)
+
+ANSWER  [S p.183-189, 202-208]
+ WHY THE PUPIL SIZE VARIES (2023 Q6): change in ambient lighting, emotional state, health,
+  medications, age, decision making (cognitive load).
+ DAUGMAN'S STATEMENT: in his patent (US 5,291,560, 1994) he says that although the iris
+  stretches and contracts, such distortions in the texture "can readily be reversed
+  mathematically" to extract and encode an iris signature that remains the same over a wide
+  range of dilations; the iris "proves to be essentially immutable over a person's life".
+  (Weaver 2006 repeated: dilation does not adversely affect authentication.)
+ HIS SOLUTION: the RUBBER SHEET model - linearly stretch/compress the iris to a standard
+  size frame (normalisation, C3).
+ THE EXPERIMENT (2022-02 Q3) [S p.185-189]: dilation information is available at
+  segmentation but is discarded when going to the normalised image. Data: 18 subjects,
+  632 iris images (LG 2200), 28 % of them taken with the lights off to induce dilation.
+  Method: for each matched pair the DIFFERENCE IN DILATION RATIO was computed with a
+  modified ICE baseline; assumption: the authentic and impostor distributions are
+  conditioned by dilation.
+  RESULTS (sketch two histograms of HD: genuine moving right, impostor fixed):
+   - A larger difference in dilation SHIFTS THE MATCH (authentic) distribution to higher HD
+     (worse) - there is a distinct curve for small, medium and large difference.
+   - NO change of the impostor (non-match) distribution; the non-match MEAN even decreases
+     somewhat for larger dilation (0.448 -> 0.427), "surprising but likely not a problem".
+     (Oral O21.4: the examiner wanted to hear exactly this - the impostor MEAN decreases
+     slightly - and was unhappy with "the whole distribution shifts a bit to the left".)
+   - Larger pupil dilation increases the mean of the match distribution (similar-dilation
+     pairs: mean 0.193 small pupils, 0.247 medium, 0.259 large pupils).
+  CONCLUSION: when the difference in pupil dilation between two images is large, the
+  FNMR INCREASES (FMR unchanged). NIST IREX I found similar results; the draft ISO iris
+  format has a field for the pupil dilation ratio. Open questions: control acquisition,
+  enrol multiple samples, better model of dilation.
+ DILATION AND AGE (note N4) [S p.202-208]: ISO/IEC 19795-1 calls the increase of error
+  rates with time "template aging". Medicine: pupil size decreases linearly with age at all
+  illuminance levels (Winn et al.) -> a greater time lapse means on average a greater
+  difference in dilation -> assumption: this degrades iris match scores. Experiments (43
+  subjects, 86 irises, LG 4000, 2-year lapse, 1830 images; matchers IrisBEE and VeriEye):
+  authentic distribution clearly DEGRADED, impostor distribution unchanged; 84/86 irises had
+  a higher mean HD with a longer lapse; after 2 years FRR increased by 157-305 % (IrisBEE) and
+  239-370 % (VeriEye). CONSEQUENCES: higher FNMR over time, possibly need to RE-ENROL or
+  update the template (Flom and Safir's patent allows this; Daugman's patent says one
+  enrolment lasts a lifetime - "which narrative won?"). The topic is CONTROVERSIAL: a NIST
+  report on a large operational data set finds almost no iris aging.
+
+-------------------------------------------------------------------------------------
+C6  Fourier spectra of local iris regions: image quality (and the formula D)
+-------------------------------------------------------------------------------------
+ASKED IN: 2020 Q8 ; 2022-01 Q10 ; 2024-08 Q4 ; 2025 Q8
+
+ANSWER  [S p.167-178]
+ IDEA: divide the segmented iris into local regions (e.g. 64 x 64 pixels) and analyse the
+  2D Fourier spectrum of each; the distribution of power over low / middle / high spatial
+  frequencies reveals the imperfection:
+  - OUT-OF-FOCUS BLUR: the spectrum is largely dominated by LOW frequency components
+    (defocus removes the highest frequencies, the low ones are practically unaffected).
+  - MOTION BLUR: lacks middle and high frequency components; its frequency distribution
+    is similar to that of an out-of-focus image.
+  - OCCLUSION by eyelashes/eyelids: contains significant MIDDLE and HIGH frequency
+    components (sharp edges).
+  - A good, clearly focused, unoccluded texture has strong MIDDLE-frequency power.
+ THE FORMULA (2022-01 Q10):   D = [ (F1 + F2 + F3) ; F2 / (F1 + F3) ]
+   F_i = double integral over the band Omega_i of |F(u,v)| du dv, i = 1,2,3, with
+   Omega_i = { (u,v) : f1_i < sqrt(u^2 + v^2) <= f2_i }  (a ring in the 2D spectrum;
+   (f1_i, f2_i) = the radial frequency pair that are the extrema of the band),
+   F(u,v) = 2D Fourier spectrum of the iris region; F1, F2, F3 = power of the LOW, MIDDLE
+   and HIGH frequency components. It is the iris QUALITY DESCRIPTOR of the local region:
+   - first component, the TOTAL spectrum power (F1+F2+F3), separates severely occluded
+     images from high-quality images;
+   - second component, the RATIO of the middle-frequency power to the other powers
+     F2/(F1+F3), is high for a clearly focused image and low for out-of-focus or
+     motion-blurred images.
+   The mean of the resulting two local quality descriptors is taken as the quality measure
+   of the whole iris image. Quality can also be used locally as a weight in matching
+   (weighted Hamming distance, wavelet energy per concentric band, higher weights for the
+   more stable inner bands). [S p.176-178]
+ SHARPNESS/FOCUS EVALUATION IN DETAIL (oral O23.3) [S p.169-172]: sharpness = the normalised
+  magnitude of the intensity gradient near the pupillary boundary, computed in a ROI:
+   1 from the ROI compute the median of the pixels in the pupil region, Mp, and of the pixels
+     in the iris region, Mi;
+   2 for all ROI pixels with intensities in [Mp .. Mi] calculate the absolute values of their
+     horizontal gradients;
+   3 S = average of the top 20 values;
+   4 sharpness = S / (Mi - Mp);
+   5 if > 0.5 the image is considered well focused.
+  Fourier alternative: defocus mainly removes the highest spatial frequencies (low ones are
+  practically unaffected), so measure the TOTAL POWER at higher spatial frequencies - low
+  power = defocused.
+ FACTORS THAT INFLUENCE IRIS IMAGE QUALITY (oral O24.3) [S p.167-168]: occlusion (eyelids,
+  lashes), defocus, motion blur, non-uniform illumination, low resolution / large imaging
+  distance, pupil dilation, off-angle imaging, accessories (fake or printed contact lenses).
+  Sensor/illumination point the examiner wanted: the illuminator's specular reflection should
+  fall only on the PUPIL, not on the iris (reflections on the iris destroy texture; they are
+  masked out, p.154). EFFECT ON THE DISTRIBUTIONS: poor quality raises the HD of genuine
+  pairs (authentic distribution moves/gets a longer tail to the right -> FNMR up), the
+  impostor distribution stays around 0.5 (same behaviour as for dilation and aging, C5).
+
+-------------------------------------------------------------------------------------
+C7  Printed (textured) contact lenses: detection and the role of the printing process
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-02 Q6
+
+ANSWER  [S p.190-201]
+ WHY IT MATTERS: clear lenses increase FNMR only slightly (minor issue); TEXTURED lenses
+  are a security issue - they can be used to evade detection (an easy, intentional false
+  non-match), to create a synthetic identity or (harder) to impersonate a target. So
+  automatic detection is needed.
+ DETECTION METHODS
+  1 FOURIER analysis (Daugman): a printed iris is produced by a matrix (dot) printing
+    process; this regular dot pattern leaves artefacts that are visible in the 2D Fourier
+    spectrum of the iris image - 4 points of spurious energy (the central square of the
+    spectrum is blanked so it does not dominate).
+  2 TEXTURE analysis: iris edge sharpness, iris-texton features, co-occurrence-matrix
+    features, LBP ... plus supervised classifiers; person-disjoint 10-fold cross-validation
+    reports ~100 % correct classification of the lens types seen in training.
+  3 A printed iris pattern does NOT undergo any distortion when the pupil changes in size
+    (a real iris texture stretches/compresses with dilation) (Wei, ICPR'08).
+ STILL IMAGE vs IMAGE SEQUENCE (oral O14.1): from ONE still image use Fourier analysis and
+  texture analysis (LBP + classifier); from a SEQUENCE of images (pupil size changing, e.g.
+  light flash) additionally check that the iris pattern does not deform with the pupil
+  (method 3).
+ LENSES THAT THE FOURIER METHOD MISSES (oral O9.4, O13.5, O28.2): the Fourier method works
+  for "pixelated" lenses made by a dot-matrix printing process (regular dots -> spurious
+  energy peaks). A lens whose pattern is not produced by a regular dot raster leaves no such
+  peaks in the spectrum - then use texture-based detection (LBP, edge sharpness, texton and
+  co-occurrence features + classifier) or the no-distortion-with-pupil-size test. [S p.198-200]
+ DOES THE PRINTING PROCESS AFFECT THE DETECTION? Yes. The artefacts the detectors look for
+  come from the printing process (dot-matrix pattern, printer resolution, ink/colour and
+  the pattern design of each brand/type: e.g. for FreshLook alone there are 4 types with 3 to
+  12 colours each). Different producers/printing processes give different spectra and
+  textures: detection of textured lenses SEEN in training is a solved problem, detection of
+  NEW textured lenses (open-set recognition) is NOT solved. The lens itself can also hide the
+  real iris texture and cause a false non-match. [S p.201] [!] (the sheet only says "it can
+  intentionally create a false non-match", which mixes up the lens effect with detection)
+
+
+#####################################################################################
+ D. FACE
+#####################################################################################
+
+-------------------------------------------------------------------------------------
+D1  Three levels of features for face recognition (and the IPD needed)
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-01 Q1 ; 2025 Q4 ; note N27 ("L1 L2 L3 face ...")
+
+ANSWER  [S p.219-222]
+ (Anthropometric landmark measurements alone lack the distinctiveness needed for automated
+  recognition, so features are grouped in three levels.)
+ L1 - GROSS facial characteristics: the GEOMETRY of the face and the global SKIN COLOUR:
+      a short round face vs an elongated thin face; faces with predominantly male vs female
+      characteristics; faces of different races. Can be extracted even from LOW-resolution
+      images: < 30 inter-pupillary distance (IPD).
+ L2 - LOCALIZED face information: the STRUCTURE of the face components (e.g. eyes), the
+      RELATIONSHIP between the facial components and the precise SHAPE of the face; this
+      level gives ACCURATE face recognition; local-region characteristics can be represented
+      with geometric or texture descriptors (e.g. Gabor, LBP, shape). 30 to 75 IPD.
+ L3 - unstructured MICRO-level features: scars, freckles, skin discolouration, moles;
+      useful e.g. for discriminating identical twins (the slide marks this with "?!").
+      Needs the highest resolution - more than 75 IPD [?: the slides give no number for L3;
+      ">75 IPD" is the value written in the solved sheet and is the logical continuation of
+      "<30" and "30-75"; I could not confirm it from an independent source [W]].
+ (IPD examples on the slides: IPD = 35, 12, 7 pixels in a 640 x 480 image, p.227.)
+
+-------------------------------------------------------------------------------------
+D2  Viola-Jones face detector: integral image, weak/strong classifier, cascade, features
+-------------------------------------------------------------------------------------
+ASKED IN: 2017 Q9 ; 2020 Q6 ; 2022-01 Q7 ; 2023 Q7 ; 2024-01 Q5 ; 2024-08 Q5 ; N5
+
+OVERVIEW  [S p.230-247]: VJ scans the input image with detection windows of different
+ sizes and decides for each window whether it contains a face. In each window a classifier
+ is applied to simple local features derived with rectangular (Haar-like) filters: two-,
+ three- and four-rectangle filters. The feature value = the sum of the pixel intensities in
+ the light rectangle(s) minus the sum in the dark one(s) (oral O24 note: the examiner
+ corrected a student who spoke of "+1 for white, -1 for black, multiply with the pixels":
+ say "the pixels under the white part are SUMMED, those under the black part are
+ SUBTRACTED"; there are no negative weights/pixel values). When the combination of the filter
+ responses exceeds a threshold, a face is detected. (Why light/dark regions: e.g. the eyes
+ are darker than the cheeks and the bridge of the nose.)
+
+INTEGRAL IMAGE (2017 Q9, 2022-01 Q7, 2024-01 Q5)  [S p.234-235]
+ - WHAT: a new array in which the value at (x, y) is the SUM of ALL pixel intensities ABOVE
+   and TO THE LEFT of (x, y) (inclusive) in the original image:
+        S(x, y) = sum over x' <= x, y' <= y of I(x', y')
+   Computed in ONE pass over the image [X]: S(x,y) = I(x,y) + S(x-1,y) + S(x,y-1) -
+   S(x-1,y-1).
+ - WHY: more than 180 000 different Haar-like features can be derived from a 24 x 24
+   detection window, and every window of every size at every position needs them. With the
+   integral image the SUM OF PIXELS IN ANY RECTANGLE needs only FOUR array accesses
+   (S(D) + S(A) - S(B) - S(C) for the four corners), independent of the rectangle size.
+   This is what makes the detector real-time. (Reduces the computational burden.)
+ - WHERE/HOW: in the VJ face detector, computed once from the input image and then used to
+   evaluate every Haar feature.
+
+WEAK AND STRONG CLASSIFIER (2024-01 Q5)  [S p.236-242]
+ - WEAK classifier: a classifier that only needs to EXCEED CHANCE performance (error < 0.5).
+   Here: one Haar feature value f_j(w) of the window w, a polarity p_j (+/-1) and a
+   threshold theta_j: h_j(w) = 1 if p_j f_j(w) < p_j theta_j else 0 [X]. (vertical or
+   horizontal half-planes in feature space).
+ - STRONG classifier: built by BOOSTING (AdaBoost variant). In each round the weak
+   classifier with the lowest weighted training error is selected, the weights of the
+   misclassified training examples are RAISED, and the next round concentrates on the hard
+   examples. After T rounds (T << L, the total number of filters) the strong classifier is
+   the WEIGHTED LINEAR COMBINATION of the T best weak classifiers; the weights
+   alpha_t (= 1/2 ln((1-err)/err), e.g. err 0.3 -> 0.41, 0.21 -> 0.65, 0.14 -> 0.92) are
+   proportional to the discriminative power, i.e. inversely related to the training error.
+   A face is found if the weighted sum exceeds a threshold. AdaBoost therefore also does the
+   FEATURE SELECTION.
+   HOW THE WEIGHTS ARE SET (oral O28.3): all training examples start with equal weights;
+   after each round the weights of the examples the chosen weak classifier got WRONG are
+   raised (in the usual form w_i <- w_i * eps/(1-eps) for the correctly classified ones,
+   then renormalised [X]) so the next weak classifier concentrates on the "hard" examples;
+   "hardness" is captured by the weights attached to the training examples. [S p.238]
+   BOOSTING in general = a supervised method that combines weak learners into a more
+   accurate (strong) classifier, in multiple rounds. Detection stage: only the T selected
+   feature values are computed per window, which makes the classification rapid.
+   (Oral O24 remark: one examiner objected to "a strong classifier is built from several
+   weak classifiers" - the slide wording is "weak learner = a classifier that only needs to
+   exceed chance performance"; use the slide wording.)
+
+CASCADE (2020 Q6, 2024-08 Q5, N5)  [S p.243-245]
+ - WHY: even with boosting the whole image must still be scanned with windows of many sizes,
+   and almost all windows are NON-faces. Spending the full classifier on each of them is
+   wasteful.
+ - HOW: a cascade of strong classifiers of increasing complexity. Classifiers with a simple,
+   small set of filters are used in the EARLY stages to screen out a large number of
+   non-face windows (reject as early as possible, while keeping nearly all faces), and more
+   powerful classifiers are used only in the later stages on the few remaining difficult
+   windows. A window is declared a face only when it passes ALL stages; one rejection ends
+   the processing of that window. Connected stage by stage they act as one strong detector
+   with a very low overall false-match rate.
+ - NUMBERS (2017 Q9): with per-stage GMR = 0.99 and FMR = 0.3 the cascade of K stages has
+   GMR = 0.99^K and FMR = 0.3^K. For K = 10: 0.99^10 = 0.904 ~ 0.9 and 0.3^10 = 5.9 x 10^-6
+   ~ 6 x 10^-6 (order 10^-6). So 10 stages. [S p.244] (Strictly, FMR <= 10^-6 would need
+   K = 12, with GMR 0.886; the slide's answer is 10.)
+ - THE TWO MOST EFFECTIVE HAAR-LIKE FILTERS [S p.245]:
+     (1) TWO-rectangle filter, dark rectangle on top, light below: the EYE region is
+         typically darker than the CHEEK region;
+     (2) THREE-rectangle filter, dark - light - dark horizontally: the BRIDGE OF THE NOSE is
+         brighter than the two eye regions.
+   Use them in the FIRST stage(s) of the cascade: together they can reject about 60 % of
+   the non-faces [S p.245] while keeping the faces. [W: the original paper reports a 2-feature
+   first classifier with ~100 % detection; the slide figure of ~60 % rejection is the one to
+   quote, other sources say 40-50 % false positives.]
+
+BRUTE-FORCE STEP AND INVERTED FACES (2023 Q7)  [S p.230-231, 243]
+ - The brute-force part is the SCANNING of the input image with detection windows of
+   different sizes (every position, every scale, no initial assumption about where or how
+   big a face is; each window is classified). Speed-ups: integral image + cascade.
+ - Inverted (also tilted, profile) faces are a problem because the Haar-like features are
+   specific patterns of contrast between light and dark regions at fixed positions (eyes
+   darker than cheeks, nose bridge brighter than eyes) and the classifier is TRAINED on
+   upright frontal faces vs non-faces; turning the face upside down reverses the spatial
+   arrangement, so the features do not respond (false negatives; the slide also shows false
+   positives on cluttered background). Open problems: occlusion, pose, low resolution. [p.250]
+
+-------------------------------------------------------------------------------------
+D3  Face alignment: geometric warping vs landmark detection
+-------------------------------------------------------------------------------------
+ASKED IN: 2020 Q5 ; 2022-01 Q4 ; 2024-01 Q6
+
+ANSWER  [S p.251-262]
+ ALIGNMENT BY GEOMETRIC WARPING: INPUT = the detected EYE POSITIONS plus output parameters:
+  horizontal/vertical offset (the percentage of the image to keep next to the eyes) and
+  the size of the output image. OUTPUT = a scaled, rotated and cropped image. Basic idea:
+  rotate the face around one eye so that the eyes lie on a horizontal line at a fixed
+  distance, then crop.
+ PROBLEM: only the IN-PLANE rotation (plus scale/translation, i.e. a similarity transform)
+  is addressed; it uses two points only, so it cannot handle out-of-plane pose (yaw/pitch),
+  expression or face-shape differences.
+ BETTER METHOD (more general alignment): LANDMARK DETECTION. Input: the facial image and
+  the face position (from detection); output: the landmarks (fiducial points; e.g. 29, 68
+  or 194 points depending on the database). With many landmarks we can ALIGN/FRONTALIZE the
+  face, use pose-adaptive feature extractors, morph and synthesise. It is better because
+  many points give a much richer description of the geometry (pose and shape), and the same
+  idea is not limited to faces (the course also applies cascaded pose regression to ears).
+  Approaches: active appearance models, constrained local models, parts-based methods,
+  CASCADED REGRESSION (start from the mean shape; at every stage compute features at the
+  current shape - pixel differences/comparisons, HOG - and regress the shape increment
+  (least squares, trees, ridge, Gaussian process): S_(t+1) = S_t + R_t(F(I, S_t))).
+ Mitigation of the geometric-warping problem (2020 Q5): use the landmark-detection method.
+ CASCADES IN LANDMARK DETECTION (oral O12.4, O17.2, O21.5): the word "cascade" appears in
+  TWO places in the course - (1) Viola-Jones: a cascade of CLASSIFIERS (D2); (2) landmark
+  detection: a cascade of REGRESSION models. In (2) the training set (images with annotated
+  landmarks) is used stage by stage: initial shape S1 = average of the reference annotations
+  placed by the face detector; at stage t compute the feature vector x_i = F(I_i, S_t) at
+  the current shape vertices, build the regressor matrix X_t of all n images, compute the
+  required displacement DeltaS = S_ref - S_t for each image (output matrix), learn the
+  regression model R_t (least squares, regression trees, ridge, Gaussian-process
+  regression) and update S_(t+1) = S_t + R_t(X_t). Each stage refines the landmark
+  positions. How many regressions are put together = the number of stages T, a design
+  parameter [the slides do not fix it]. YES, the approach uses the TEXTURE of the face: the
+  features at the current landmark positions are pixel differences, pixel comparisons or
+  HOG. [S p.255-261]
+
+-------------------------------------------------------------------------------------
+D4  Taxonomy of face recognition methods; the property common to all of them
+-------------------------------------------------------------------------------------
+ASKED IN: 2024-08 Q6 ; note N8
+
+ANSWER 2024-08 Q6 (level one of the taxonomy + one method per branch)  [S p.266]
+                          FACE RECOGNITION
+        +-------------------+--------------------+----------------------+
+   APPEARANCE-BASED     MODEL-BASED          TEXTURE-BASED        (+ DL / CNN-based)
+   (holistic: compact   (pose-independent    (robust LOCAL
+   representation of    representation,      features, invariant
+   the whole face;      needs fiducial       to pose/lighting)
+   subspace learned     points)
+   from training set)
+   - linear subspace:   - 2-D: Elastic       - gradient orientation:
+     PCA, LDA, ICA        Bunch Graph          HOG, SIFT
+   - non-linear           Matching, Active   - Local Binary Pattern
+     subspace             Appearance Model
+                        - 3-D: Morphable model
+  One specific method per branch: Eigenfaces (PCA) - appearance-based; Elastic Bunch Graph
+  Matching - model-based; Local Binary Patterns (or HOG) - texture-based (and e.g. a
+  ResNet/FaceNet-type CNN for deep learning).
+ANSWER N8 - "what common property do texture-based, model-based and even deep-learning
+ face recognition models have" [?: this is not stated as one sentence on the slides; the
+ best-supported answers, in order]:
+  1 They all work on a DETECTED and ALIGNED (normalised) face: the pipeline detection ->
+    alignment/landmarks -> feature extraction -> matching is the same. LBP/HOG are computed
+    on a pre-aligned face or around landmarks, EBGM needs fiducial points, and the deep
+    models take landmark-aligned crops (RetinaFace predicts the 5 landmarks). [S p.223,
+    251, 289, 298, 329]
+  2 They all turn the face into a FEATURE VECTOR (template) and match by a distance /
+    similarity of the vectors (Euclidean, cosine, chi-square, average jet similarity).
+  3 They are all built around LOCAL, hierarchical features (local texture patches, local
+    Gabor jets at fiducial points, convolutional receptive fields) and none of the early
+    ones is strongly invariant to pose/illumination - which is why deep learning was
+    introduced. [S p.308]
+ If only one sentence is allowed: "they all need landmark-based normalisation of the face
+ (detection + alignment) before features are extracted and compared."
+
+-------------------------------------------------------------------------------------
+D5  PCA, LDA, Eigenfaces, Fisherfaces
+-------------------------------------------------------------------------------------
+ASKED IN: 2017 Q10 ; 2020 Q4 ; 2022-02 Q7 ; 2023 Q8 ; 2024-08 Q10
+
+ANSWER  [S p.267-279]
+ SUBSPACE IDEA: an A x B image is a point in R^(AxB); faces are highly correlated, so they
+  are compressed to a low-dimensional subspace that captures the key appearance features;
+  images are matched by comparing their vectors of weights.
+ PCA (basis of EIGENFACES) - 2023 Q8 "basic concept, dimensionality reduction":
+  - UNSUPERVISED (class labels are never used): learns the subspace that accounts for as
+    much VARIABILITY (variance) of the training data as possible, via an eigenvalue
+    decomposition of the covariance matrix.
+  - Dimensionality reduction: the eigenvector with the largest eigenvalue is the principal
+    axis (maximum variability). Keep only d' << d eigenvectors belonging to the d' LARGEST
+    eigenvalues (sorted in descending order); they span a lower-dimensional subspace E'
+    that still holds most of the variability, and the data are represented by d' weights
+    instead of d pixels. Fewer eigenfaces = more information loss and less discrimination.
+  - Matching: eigen-coefficients omega_G (gallery) and omega_P (probe); the Euclidean
+    distance between them is the (dis)similarity.
+ LDA (basis of FISHERFACES): SUPERVISED - uses the class labels; minimises the INTRA-class
+  (within-class) variations and maximises the INTER-class (between-class) variations.
+  Class means mu_j, scatter of class j S_j; within-class scatter S_W = sum_j S_j; between-
+  class scatter S_B = sum_j N_j (mu_j - mu)(mu_j - mu)^T [X]. Maximise S_W^-1 S_B: solve
+  the eigensystem S_W^-1 S_B E = lambda E; weights omega = E^T x; matching as in PCA.
+ DIFFERENCE (2017 Q10, 2022-02 Q7, 2024-08 Q10):
+  - EIGENFACES attempt to maximise the SCATTER of the training images in the face space
+    (PCA); FISHERFACES attempt to maximise the BETWEEN-class scatter while MINIMISING the
+    WITHIN-class scatter (LDA).
+  - PCA: unsupervised, optimal for representation/reconstruction, its principal axis
+    maximises the variance of the projected data (it may keep variation useless for
+    classification, e.g. illumination); accuracy "cannot be expected to be very high".
+    LDA: supervised, optimal for separation of classes - its axis is aligned so that the
+    variance within each class is minimised and the separability of the classes maximised.
+  [!] The solved sheet (2020 Q4) states it the wrong way round ("PCA maximises the variance
+  inside the class and minimises between the classes").
+ LDA IN DETAIL (oral O22.1, O9.5, O15.5, O20.3): LDA belongs to the APPEARANCE-BASED branch
+  of the taxonomy (linear subspace). Procedure: (1) class means mu_j and the scatter S_j of
+  every class; (2) within-class scatter S_W and between-class scatter S_B; (3) maximise
+  S_B relative to S_W = solve the eigensystem S_W^-1 S_B E = lambda E; (4) projection weights
+  omega = E^T x; (5) MATCHING: compute omega_G and omega_P of gallery and probe and compare
+  with a distance (as for PCA). GETTING THE REPRESENTATION BACK: x ~ mu + sum_j omega_j e_j
+  (a face is approximated as the mean plus a weighted sum of the eigen/Fisher faces; with
+  fewer axes the reconstruction error grows). [S p.271-277]
+ IF N < d (2020 Q4): S_W becomes SINGULAR. First apply PCA to reduce the dimensionality of
+  the training data, then apply LDA to the transformed data of lower dimension (this
+  combination is what is really called Fisherfaces).
+ PSEUDO-CODE THAT GIVES THE EIGENFACES (2022-02 Q7)  [S p.270]
+   input : training images x_1..x_N, each a d-dimensional column vector
+           (the image pixels stacked); number d' of eigenfaces to keep
+   output: mean face mu, eigenfaces E' = [e_1 .. e_d']
+   1. mu = (1/N) * sum_{i=1..N} x_i                       (average face)
+   2. X  = [ (x_1 - mu), (x_2 - mu), ..., (x_N - mu) ]    (centred data matrix, d x N)
+   3. C  = X * X^T                                        (covariance matrix)
+   4. solve C E = lambda E : eigenvalues and eigenvectors of C
+   5. sort the eigenvectors by decreasing eigenvalue and keep the first d'  -> E'
+   6. weights of any image x:  omega = E'^T (x - mu)      (coordinates in the face space)
+   return mu, E'
+  [X] when N < d it is cheaper to take the eigenvectors v of X^T X (N x N) and use X v.
+
+-------------------------------------------------------------------------------------
+D6  Gabor jets and Elastic Bunch Graph Matching
+-------------------------------------------------------------------------------------
+ASKED IN: 2024-01 Q7
+
+ANSWER  [S p.280-287]  (a MODEL-BASED method)
+ JET = the set of GABOR COEFFICIENTS characterising the LOCAL TEXTURE around a fiducial
+  point. One Gabor coefficient at a location = the response of convolving the image with a
+  complex 2D Gabor filter centred at that location; by varying the filter's ORIENTATION and
+  FREQUENCY we get a set of coefficients, the jet [typically 5 frequencies x 8
+  orientations = 40 complex coefficients: X].
+ IN WHICH SPACE / HOW BIG (oral O12.5): the Gabor coefficients are obtained in the IMAGE
+  (spatial) domain by convolving the image with the complex Gabor filter centred at the
+  fiducial point (a multiplication in the Fourier domain would be equivalent [X]). All jets
+  have the SAME size - the same set of filter orientations and frequencies is used at every
+  node, so every jet has the same number of complex coefficients (40 in the classic
+  setting [X]) - which is what allows the jet-to-jet similarity to be computed.
+ USED IN: ELASTIC BUNCH GRAPH MATCHING (EBGM) with the FACE BUNCH GRAPH (FBG). (Oral O24.1:
+  "EFBG" - the examiner says only the abbreviation: it is Elastic Bunch Graph Matching /
+  Face Bunch Graph; then say everything in this section.) A face is a
+  labelled graph: each NODE = a fiducial point labelled with a jet; each EDGE labelled with
+  the average distance between the two fiducial points.
+ CONSTRUCTION of the FBG model (from training faces of a given pose): Stage 1 - manually
+  mark the fiducial points and the graph structure in one (few) initial image(s), obtain the
+  rest semi-automatically by comparing new images to model graphs using Gabor jets. Stage 2
+  - stack the individual graphs; the set of jets of the same fiducial point is a BUNCH (a
+  "local expert": it represents the local variation of that point in the population, e.g. an
+  eye bunch has open, closed, male, female eyes).
+ MATCHING (recognition with the FBG): 1 run elastic bunch graph matching on the probe:
+  (a) take the mean model Gabor jets of each bunch and find the approximate face position at
+  discrete locations; (b) refine the position by the similarity between a Gabor jet of the
+  image and a bunch of model jets; (c) precisely locate the fiducial points by moving the
+  nodes locally and relative to each other to optimise the graph similarity. 2 Compare with
+  ALL model graphs: the similarity between the probe's image graph and a model graph = the
+  AVERAGE similarity of the jets at corresponding fiducial points (works even with some
+  missing nodes). 3 Take the BEST similarity score and apply a THRESHOLD to decide whether
+  it is a valid match.
+
+-------------------------------------------------------------------------------------
+D7  HOG (sparse vs dense) and LBP / multiscale LBP for faces
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-02 Q4 ; 2024-01 Q10 ; 2025 Q6 ; 2023 Q9 (MLBP) ; note N21 (lbp)
+
+HOG ANSWER  [S p.297-301]
+ WHAT: Histogram of Oriented Gradients - an image DESCRIPTOR built from gradient
+  orientations ("invariant to 2D rotation" on the slide; strictly, plain HOG tolerates only
+  small in-plane rotations unless the dominant orientation is normalised [X]).
+ SKETCH: take a patch of 8 x 8 pixels -> divide it into cells; for every cell compute the
+  gradient (magnitude, orientation) of each pixel and a HISTOGRAM of the gradient
+  orientations of that cell (e.g. 8-9 bins) = "HOG counts the occurrences of edge
+  orientations"; the picture shows for every cell a star of bars giving the orientation
+  strengths. (Optional block normalisation [X].)
+ ARRANGEMENT: many descriptors are arranged either in local neighbourhoods around informative
+  points (SPARSE) or across the entire image (DENSE).
+  - SPARSE: descriptors only at key locations - FACIAL LANDMARKS found e.g. with an Active
+    Appearance Model (slide: 24 x 24 and 64 x 64 HOG descriptors around the landmarks);
+    fewer descriptors, so faster to compute/match, but needs a landmark detector (about
+    +2.5 s per image) and its accuracy limits recognition [W].
+  - DENSE: descriptors on a regular GRID of uniformly spaced cells covering the whole face
+    image; no landmarks needed, tolerant to landmark errors (occlusion, pose,
+    illumination) [W], more data per face; the slide: smaller descriptor sizes are better.
+ WHERE USED: face recognition (FERET, MPIE, AR and Yale databases).
+ MATCHING (2024-01 Q10, 2025 Q6): the (landmark-based) face image is divided into cells;
+  for each cell the histogram of gradient directions is computed; the histograms of ALL
+  cells are CONCATENATED into one feature vector; two faces are compared by a distance
+  between these vectors (cosine distance works better); dimensionality reduction by PCA
+  does not help but LDA (minimise intra-class, maximise inter-class variation) helps a lot;
+  results of several descriptors can be combined at decision level.
+ "HOG for face DETECTION" (2025 Q6): on the slides HOG is used for recognition; as a
+  detector feature HOG + a linear classifier is slid over the image at several scales
+  (Dalal-Triggs style) [X].
+
+LBP / MLBP ANSWER (2023 Q9, N21)  [S p.302-307]
+ LBP: a simple TEXTURE operator; features are obtained from a neighbourhood (3 x 3). The 8
+  neighbours are compared with the CENTRE pixel (>= centre -> 1, else 0) and the result is
+  an 8-bit BINARY code, converted to a decimal number by weighting each bit (2^k) and
+  summing. Robust to monotonic illumination changes [X].
+ MULTISCALE LBP (MLBP): two parameters - the NUMBER OF SAMPLING POINTS P and the RADIUS R
+  (distance of the sampling points from the centre pixel); if a sampling point is off the
+  pixel grid its intensity is obtained by BILINEAR INTERPOLATION. Small R (e.g. LBP 8,1)
+  captures micro details, larger R (8,3 / 8,5) highlights macro features.
+ FROM CODES TO A MATCH: after encoding every pixel the face is divided into several smaller
+  WINDOWS; the HISTOGRAM of the codes is computed in each window (the slide: 8 bins for LBP
+  and 2^P for MLBP; [X] a plain 8-neighbour LBP has 256 possible codes); the histograms of
+  all windows are CONCATENATED and the vector NORMALISED = the global feature vector. Two
+  faces are matched by the similarity/distance of these vectors (optionally with region
+  weights: eyes/mouth weighted more, p.306).
+
+-------------------------------------------------------------------------------------
+D8  Deep learning for faces: layers, human vs CNN, removing layers, RetinaFace
+-------------------------------------------------------------------------------------
+ASKED IN: 2018 Q9 ; 2020 Q3 ; 2025 Q10 ; note N6 (removing deep layers)
+
+ANSWER 2020 Q3 - discriminative information in each layer  [S p.328]
+ Features were taken from each layer of an ImageNet-pretrained CNN and fed into a linear
+ SVM or Softmax. HIGHER layers generally produce MORE DISCRIMINATIVE features: as the feature
+ hierarchy becomes deeper, the network learns increasingly powerful features (low layers =
+ generic edges/textures, upper layers = parts/objects [X]). Most probable explanation of why
+ this works so well: LOTS OF DATA.
+ANSWER 2018 Q9 - how people and CNNs recognise faces  [S p.218, 308, 328]
+ The basic resemblance: both rely on HIGHER-LEVEL characteristics. Humans perceive a face
+ from certain higher-level characteristics (holistic; they find it hard to detect or
+ recognise INVERTED faces; prosopagnosia = loss of the ability to recognise faces only).
+ A CNN is a hierarchy of feature extractors from simple to complex, and its higher
+ layers carry the most discriminative (face-level) information. [!] the solved sheet adds
+ "CNN perceives low and high level"; the part to stress is that the high-level
+ representation does the recognition in both.
+ ORAL VARIANT (O21.1: "the link between humans' difficulties in perceiving faces and the
+ algorithms', because the recognition algorithm has the same problems"): the examiner wanted
+ to hear VIOLA-JONES, even though the question said "recognition": humans find it difficult
+ to detect or recognise INVERTED faces [S p.218], and the Viola-Jones detector has the same
+ problem with inverted (and tilted) faces because it is trained on upright faces with
+ Haar features of fixed light/dark layout [S p.230] (D2).
+ANSWER N6 - removing deep layers (AlexNet, 8 layers, ImageNet, 18.2 % top-5 error)  [S p.323-327]
+   removed                                  parameters dropped   performance drop
+   top fully connected layer (layer 7)      ~16 million          only 1.1 %
+   both FC layers (layers 6 and 7)          ~50 million          5.7 %
+   upper feature-extractor layers 3 and 4   ~1 million           3.0 %
+   layers 3, 4, 6 and 7 (only 4 layers)     most of the net      33.5 %
+  CONCLUSION: the DEPTH of the network is key. Most parameters sit in the fully connected
+  layers (removing them barely hurts), whereas the few parameters of the convolutional
+  feature-extraction layers matter a lot (3.0 % for only ~1 M parameters) and removing
+  several layers together hurts disproportionately (33.5 %, far more than the sum).
+ANSWER 2025 Q10 - feature pyramids in RetinaFace  [S p.329-333]
+ RetinaFace is a CNN face detector, a multi-task network: face classification (face / no
+ face), bounding box, five facial landmarks, 3D face mesh - in one forward pass.
+ FEATURE PYRAMID NETWORK (FPN):
+  - BOTTOM-UP pathway: the backbone extracts high-level SEMANTIC features (resolution falls
+    and semantics rise with depth);
+  - TOP-DOWN pathway: ENHANCES the low-resolution (but semantic) features by up-sampling
+    them and combining them with the bottom-up maps, so every pyramid level has both
+    resolution and semantics;
+  - detections (anchors of different sizes, then the context head modules) are made on
+    every pyramid level => effective face detection across MULTIPLE SCALES.
+  PURPOSE: detect SMALL faces in low-resolution regions and keep consistent accuracy across
+  varying face sizes.
+
+-------------------------------------------------------------------------------------
+D9  Which modality gives the most interpretable information for gender
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-01 Q8
+
+ANSWER  [S p.57, 213, 216, 220]
+ The FACE. Reasons: (1) the face directly shows gender-related cues a human can see and name
+ - facial hair, jawline, brow ridge, shape/fat distribution, skin; the L1 face features are
+ exactly "faces exhibiting predominantly male and female characteristics", extractable even
+ from low-resolution images; (2) the course lists gender, age, ethnicity and emotional state
+ as the "soft" attributes of the face modality, which people read naturally;
+ (3) fingerprint: the only gender-related feature is statistical (ridge density: about 20.7
+ ridges/cm for a young male vs 23.4 ridges/cm for a female) - it needs measurement and is
+ meaningless to a human looking at a print; (4) iris: the texture shows no human-interpretable
+ gender cue at all. So extracted face features (geometry, components) are interpretable,
+ the other two give at most abstract statistics.
+
+#####################################################################################
+ E. MULTIBIOMETRICS
+#####################################################################################
+
+-------------------------------------------------------------------------------------
+E1  Properties of multimodal biometric systems
+-------------------------------------------------------------------------------------
+ASKED IN: 2018 Q10 ; 2020 Q2 ; 2024-01 Q8
+
+ANSWER  [S p.341-342, 351]  Multi-modal = different biometric TRAITS (e.g. palmprint +
+ fingerprints + hand shape; face + iris).
+ + The traits are expected to be UNCORRELATED (independent evidence) -> leads to GREATER
+   improvement in performance than the other types of multibiometric systems.
+ + General benefits of multibiometrics: sources compensate the inherent limitations of each
+   other; wider population coverage (lower failure-to-enroll); more distinctive combination
+   (higher-dimensional feature space, less overlap of the distributions); redundancy and
+   fault tolerance against noise, imprecision and drift (e.g. aging) of one source.
+ - Exceptions: voice and lip movement may be significantly correlated.
+ - HIGHER / HIGHEST COST (more sensors, longer enrolment and verification, more inconvenience).
+ - DIMINISHING RETURN after strong traits (e.g. fingerprint and iris) have already been
+   fused.
+ - Depending on the fusion scheme there may even be a PERFORMANCE DEGRADATION when many
+   traits of lower accuracy are added.
+
+-------------------------------------------------------------------------------------
+E2  Five classes of sources of multiple evidence; hybrid systems; multi-factor authentication
+-------------------------------------------------------------------------------------
+ASKED IN: 2023 Q10 ; 2024-08 Q7 ; note N7
+
+ANSWER  [S p.341-353]
+ SKETCH (multibiometric sources; design must consider performance requirements and cost)
+   Multi-algorithm / multiple representations  : one sample, several algorithms (fingerprint:
+                                                 minutiae + texture)
+   Multi-instance (multi-unit)                 : several instances of ONE trait (right eye +
+                                                 left eye; 10 fingers)
+   Multi-sample                                : several samples of the same instance (same
+                                                 finger several times; pose variations)
+   Multi-sensor                                : same trait with different sensors (optical +
+                                                 solid-state fingerprint sensor)
+   Multi-modal                                 : different traits (face + iris)
+   all five -> Multibiometric system design
+ Properties: multi-sensor: + helps the intermediate stages (segmentation, registration), -
+  cost; multi-algorithm: + cost-effective (no new sensor), + no extra inconvenience for the
+  user, - sources are correlated (noise affects both texture- and minutiae-based algorithms)
+  which limits the gain; multi-instance: + no new sensors/algorithms, helps users whose trait
+  cannot be reliably captured (dry skin, drooping eyelids), - may need a new sensor
+  arrangement; multi-sample: accounts for variation of the trait or gives a more complete
+  representation (e.g. full fingerprint), needs a sample-collection protocol.
+ MOST EFFECTIVE: MULTI-MODAL - the traits are expected to be uncorrelated, so it gives the
+  greatest improvement in performance (at the highest cost). (In practice multi-instance and
+  multi-modal systems are the more popular ones.) [p.351, 353]
+ MAIN DIFFERENCE OF MULTI-MODAL FROM THE OTHER FOUR (oral O17.1, O28.5): multi-sensor,
+  multi-algorithm, multi-instance and multi-sample all derive their evidence from a SINGLE
+  biometric trait (single modality) - the brace on the dependency table [S p.344] - while
+  multi-modal uses DIFFERENT traits. (The examiner wanted to hear "the others work on only
+  one modality"; MULTI-INSTANCE = several units of the same trait type, e.g. both eyes or ten
+  fingers, so it is NOT multi-modal.) WHICH CAN RUN IN PARALLEL: the acquisition/processing
+  architecture of every class can be serial or parallel; per the compatibility table on p.344
+  all five classes support parallel acquisition except the multi-sample class (samples of
+  one trait are taken one after another) [?: read from the table figure, check the slide].
+ Good/bad properties of multimodality (O19.5): see E1.
+ HYBRID multibiometric system (N7): uses multiple INSTANCES and multiple TRAITS together,
+  e.g. the UID in India: ten fingers + two irises (+ face) = multi-instance AND multi-modal.
+ MULTI-FACTOR AUTHENTICATION: uses biometric traits IN CONJUNCTION WITH NON-BIOMETRIC
+  authenticators such as tokens, cards or passwords (something you are + have/know).
+ WHY BETTER THAN A UNI-MODAL APPROACH [S p.341-342]: (1) the sources compensate each other's
+  inherent limitations and give wider population coverage (lower failure-to-enroll rate);
+  (2) fusion increases the dimensionality of the feature space and reduces the overlap
+  between the feature distributions of different individuals -> the combination is more
+  UNIQUE -> higher accuracy; (3) noise, imprecision and drift (aging) in a subset of the
+  sources can be compensated by the discriminatory information of the others -> REDUNDANCY
+  and FAULT TOLERANCE; [X] (4) harder to spoof, because an attacker must forge several
+  traits/factors. Costs: more sensors, time and complexity.
+
+-------------------------------------------------------------------------------------
+E3  Information along the pipeline; taxonomy of fusion levels; which apply to verification
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-01 Q9 ; 2022-02 Q5
+
+ANSWER 2022-01 Q9 - TAXONOMY (sketch)  [S p.354-355]
+                              BIOMETRIC FUSION
+                +-----------------------+------------------------+
+         PRIOR TO MATCHING                              AFTER MATCHING
+   (can be applied during enrolment              (can be applied only during
+    and/or authentication)                        authentication; the information
+         |           |                            drastically decreases)
+      Sensor      Feature                    Score      Rank        Decision
+      level       level                      level      level       level
+                                                       (applicable ONLY
+                                                        in the IDENTIFICATION mode)
+ Applicable in a VERIFICATION scenario: ALL levels EXCEPT rank level - sensor, feature,
+ score and decision level. Rank fusion consolidates the RANKED list of enrolled identities,
+ which exists only when the system searches a gallery (identification); verification gives
+ one yes/no for one claimed identity, so there is nothing to rank.
+ WHY THE PRIOR / AFTER MATCHING DIVISION MATTERS (oral O16.1): (1) fusion PRIOR to matching
+ (sensor, feature) can be applied during enrolment and/or authentication, fusion AFTER
+ matching (score, rank, decision) only during authentication; (2) the amount of information
+ available to the fusion system drastically decreases once the matcher has reduced the
+ data to scores/ranks/decisions (E3 pipeline below); (3) rank fusion exists only in the
+ identification mode. [S p.355]
+ Short notes: SENSOR level (image/pixel level) merges raw data before feature extraction;
+ only for multi-sensor and multi-sample systems (e.g. sweep sensors, 2D texture + 3D range
+ -> 3D textured model). FEATURE level consolidates feature sets of the same individual:
+ homogeneous (same extractor on several samples) or heterogeneous (different extractors/
+ traits/instances). SCORE level = fusion at the measurement/confidence level: easy access,
+ the most commonly used (E4). RANK level (E5). DECISION level = abstract level (E6).
+
+ANSWER 2022-02 Q5 - the amount of information gets reduced along the processing modules
+ (modality chosen: IRIS)  [S p.354-355]
+   SENSOR            FEATURE EXTRACTION        MATCHING             DECISION
+   raw NIR image --> normalised polar image --> 2048-bit code + --> Hamming distance --> accept /
+   640 x 480 px      --> Gabor/phase code       2048-bit mask        (ONE number,        reject
+   (~300 000 bytes)  (+ noise mask)             (~512 bytes)         e.g. HD 0.27)       (1 bit)
+   rich, but noisy,  an invariant representation,                    (identification:
+   large intra-class (may add some spurious     much less than       ranked list)
+   variability       information)               the image
+  Explanation: the raw sensor data hold the most information (but are corrupted by noise and
+  have large intra-class variability); feature extraction keeps only what should be an
+  INVARIANT representation of the pattern (background, eyelids etc. are thrown away);
+  matching reduces the two codes to ONE score; the decision to one bit (in identification a
+  rank list). Therefore fusion BEFORE matching (sensor, feature) can use the richest
+  information, fusion AFTER matching (score, rank, decision) has drastically less.
+  (The same holds for a fingerprint: image -> minutiae template -> match score -> decision.)
+
+-------------------------------------------------------------------------------------
+E4  Score-level fusion: combination rules, assumptions, verification vs identification
+-------------------------------------------------------------------------------------
+ASKED IN: 2024-01 Q9
+
+ANSWER  [S p.360-367]
+ Score-level fusion (fusion at the measurement/confidence level): the match scores output
+ by different matchers are consolidated. Challenges: scores may be distances or
+ similarities, have different numerical ranges and different probability distributions.
+ TRANSFORMATION-BASED score fusion: the scores are first normalised into a common domain
+  (a monotonic transformation: min-max, z-score, median, tanh - the tanh/median variants are
+  not sensitive to outliers), then COMBINATION RULES are applied: PRODUCT, SUM, MAX, MIN and
+  MEDIAN rule ("sum of scores", "max score", "min score" after normalisation).
+  - These rules approximate the Bayes decision rule (the likelihood-ratio approach would
+    need M-dimensional density estimation, which is hard).
+  - Product rule: a direct consequence of the assumptions, but sensitive to errors in the
+    estimation of the posterior probabilities. Sum rule: generally more effective, esp.
+    when the posterior estimates are unreliable (derived from the product rule assuming
+    that the posteriors do not deviate much from the priors). Max, min and median rules are
+    approximations of the product and sum rules. After normalisation the product rule is
+    generally not applicable (scores have no probabilistic interpretation).
+ TYPES OF SCORE FUSION (oral O16.1) [S p.361]: score-level fusion in verification mode
+  learns a decision boundary between the genuine and the impostor class from a training set
+  of score vectors; the taxonomy (the categorisation is not strict):
+    - LIKELIHOOD-RATIO based fusion (Bayesian decision theory, Neyman-Pearson): parametric
+      or non-parametric density estimation;
+    - TRANSFORMATION-based fusion (classifier combination rules: sum, product, min, max);
+    - OTHER CLASSIFICATION approaches: linear and non-linear functions (neural networks,
+      SVM), stochastic methods (genetic algorithms), non-metric methods (decision trees,
+      random forests).
+ ASSUMPTIONS the rules must follow: (1) the match scores of different matchers are
+  STATISTICALLY INDEPENDENT; (2) the PRIOR probabilities of the genuine and impostor classes
+  are EQUAL.
+ VERIFICATION vs IDENTIFICATION (key difference): in a verification system the score data
+  is a VECTOR s = [s_1, ..., s_M] (one score per matcher for the claimed identity; the output
+  is genuine/impostor); in an identification system it is an N x M MATRIX S = [s_n,m], s_n,m
+  = the score of the m-th matcher for the n-th enrolled identity (N identities, M matchers).
+  With minor modifications the rules of verification can be extended to identification.
+
+-------------------------------------------------------------------------------------
+E5  Rank-level fusion: highest rank, Borda count, logistic regression
+-------------------------------------------------------------------------------------
+ASKED IN: 2022-02 Q8 ; 2024-08 Q8 ; notes N9
+
+ANSWER  [S p.368-372]
+ a) RANK-LEVEL FUSION: in the IDENTIFICATION mode the output of a matcher can be viewed as
+  a RANKING of the enrolled identities. Rank fusion consolidates the ranks output by the
+  individual subsystems into a CONSENSUS rank for each identity. Ranks reveal LESS
+  information than match scores, but unlike scores the rankings of different matchers are
+  comparable, so NO score NORMALISATION is needed. Let R = [r_n,m] be the rank matrix (r_n,m =
+  rank of identity I_n from matcher m) and r^_n a statistic computed for user I_n; the user
+  with the LOWEST r^ gets the highest consensus rank.
+ b) BORDA COUNT METHOD: r^_n = sum over m of r_n,m  - the SUM of the ranks assigned by the
+  individual matchers; a measure of the degree of agreement among the matchers. Assumptions:
+  the ranks assigned by the matchers are statistically independent, and ALL matchers
+  perform equally well.
+ HIGHEST RANK METHOD: r^_n = min over m of r_n,m (each user gets the best rank any matcher
+  gave); useful only when the number of users is large compared with the number of matchers;
+  uses the strength of each matcher but gives ties (broken randomly).
+ LOGISTIC REGRESSION METHOD: r^_n = sum over m of w_m r_n,m - a WEIGHTED sum of the ranks, a
+  generalisation of Borda count; the weights are determined by logistic regression; useful
+  when the matchers have significantly different accuracies; needs a training phase.
+ WHERE USED (2022-02 Q8, N9): both are RANK-LEVEL fusion methods (identification mode).
+ HOW TO GET BORDA FROM LOGISTIC REGRESSION: set ALL weights equal (w_m = 1, or 1/M): the
+  weighted sum becomes the plain sum of ranks = Borda count (no training needed).
+ EXAMPLE (two matchers, four users; the slide's illustration, weights 0.8 and 0.2):
+   rank matcher 1: Alice 3, Bob 1, Charlie 4, Dick 2;  rank matcher 2: Alice 1, Bob 2,
+   Charlie 3, Dick 4.
+   Borda sum:      Alice 4, Bob 3, Charlie 7, Dick 6  -> consensus order Bob, Alice, Dick, Charlie
+   Highest rank:   Alice 1, Bob 1, Charlie 3, Dick 2  -> Alice/Bob tie (broken randomly), Dick, Charlie
+   Logistic regr.: 0.8*r1 + 0.2*r2 -> Alice 2.6, Bob 1.2, Charlie 3.8, Dick 2.4
+                                                      -> Bob, Dick, Alice, Charlie
+ Application in the course: fusing the sclera, periocular region and iris pipelines. [p.375]
+
+-------------------------------------------------------------------------------------
+E6  Decision-level fusion and majority voting
+-------------------------------------------------------------------------------------
+ASKED IN: 2020 Q1
+
+ANSWER  [S p.373-374]
+ DECISION-LEVEL (abstract-level) fusion: commercial off-the-shelf (COTS) matchers give
+ access only to the FINAL RECOGNITION DECISION (accept/reject, one bit), so only these
+ decisions can be combined; it carries the least information (E3). Methods: AND/OR rules
+ (rarely used in practice), MAJORITY VOTING (the most common), weighted majority voting,
+ Bayesian decision fusion, Dempster-Shafer theory of evidence, behaviour knowledge space.
+ WHERE IT BELONGS (oral O29.1): fusion AFTER matching, the lowest-information (decision)
+ level, only 1 bit per matcher. ANOTHER ALGORITHM OF THE COURSE THAT WORKS ON A VOTING
+ PRINCIPLE: the generalized HOUGH TRANSFORM used to align two fingerprints - every minutia
+ pair votes for a transformation, the accumulator cell with the most votes wins (B9).
+ MAJORITY VOTING: the input biometric sample is assigned to the class on which a MAJORITY
+ of the matchers agree (more than half). It ASSUMES that all matchers perform equally well;
+ no a priori knowledge about the matchers is needed and no training is required to come up
+ with the final decision. (Example on the slide: the claimed identity is Bob - the decision
+ is the vote of the individual matchers' decisions.)
+
+
+#####################################################################################
+ F. TOPICS THAT APPEAR ONLY IN THE ORAL-EXAM LIST
+#####################################################################################
+ (B11 and B12 are NOT on the Jan25 slides - the answers rest on outside sources and the
+  oral reports; check them against any older slide version or lecture notes you have.)
+
+-------------------------------------------------------------------------------------
+B11  Fingerprint image enhancement: what we enhance, the methods, Hong's algorithm
+-------------------------------------------------------------------------------------
+ASKED IN (oral): O5.3, O15.3, O22.4, O24.2, O27.5, O29.3 ; note N28
+
+WHAT AND WHY WE ENHANCE [S p.113-116, 95]: the clarity of the RIDGE STRUCTURE (the
+ ridge/valley contrast). Poor clarity comes from a dry finger (many ridge breaks), a moist
+ finger (adjacent ridges joined), creases, noise and low contrast. Enhancement reconnects
+ broken ridges, separates merged ridges and suppresses noise so that binarisation, thinning
+ and minutiae extraction work and fewer SPURIOUS minutiae appear (B8). It cannot invent
+ structure where the print is destroyed ("unrecoverable" regions are masked out instead).
+COMMON PRINCIPLE OF ALL METHODS [W]: (1) estimate the local ridge ORIENTATION and the local
+ ridge FREQUENCY, (2) filter every neighbourhood with a filter tuned to them (contextual /
+ oriented filtering) - the methods differ in how they do these two steps and in the domain
+ (spatial or frequency).
+METHODS the oral reports list: 1D smoothing, Fourier, "2SES", Hong.
+ 1 1D (directional) SMOOTHING [?]: smooth the grey levels along the local ridge direction
+   with a one-dimensional low-pass kernel (and, optionally, band-pass across the ridges), so
+   that noise and small breaks along a ridge are averaged out without blurring across the
+   ridges. Needs a good orientation field. [description inferred; not on the slides]
+ 2 FOURIER method (works in the FREQUENCY space) - the part the slides do cover [S p.86-90]:
+   locally the ridge pattern is approximated by a COSINE WAVE (amplitude, frequency,
+   orientation); its 2D FFT is computed and the wave parameters are found from the MAXIMUM of
+   the magnitude spectrum (the parameters we look for in the Fourier spectrum are the ridge
+   FREQUENCY and ORIENTATION). Complications: the ridge pattern is not an exact cosine, so
+   the FT gives a pair of blurred impulses -> first SMOOTH the magnitude spectrum with a
+   low-pass filter, then detect the maximum; creases -> smooth the orientation field with the
+   vector field V = (cos 2theta, sin 2theta) (orientation is only defined mod pi: the mean of
+   1 and 179 degrees must be 0, not 90). For the enhancement itself: filter each (overlapping)
+   block in the Fourier domain with a directional band-pass around that peak (e.g. multiply
+   the block spectrum by its own magnitude, or a Gaussian band-pass), inverse-transform and
+   recombine the blocks. This is the STFT-analysis scheme of Chikkerur et al. 2007, which
+   estimates the region mask, orientation and frequency simultaneously [W, X].
+ 3 "2SES" [?]: I could not identify this acronym on the slides or online. From the reports it
+   is the second method that works in the frequency space and searches the ridge FREQUENCY
+   and ORIENTATION in the Fourier spectrum; the examiner asked for it in detail. If your
+   lecture notes define it (the "2D enhancement scheme" of O15.3 may be the same thing), use
+   their definition; otherwise present it as a two-stage Fourier scheme as in point 2:
+   stage 1 = block-wise orientation/frequency/energy estimation and smoothing, stage 2 =
+   directional filtering with those estimates [closest published match: two-stage STFT
+   enhancement, W].
+ 4 HONG'S ALGORITHM (Hong, Wan, Jain, IEEE TPAMI 20(8):777-789, 1998) - spatial-domain,
+   Gabor-filter based enhancement [W for the citation and the principle; the steps are from
+   the paper as I know it, X]:
+     a) NORMALISE the image to a prescribed mean and variance;
+     b) estimate the block-wise ridge ORIENTATION field (gradient based) and smooth it;
+     c) estimate the local ridge FREQUENCY (projection of the grey levels along the ridge
+        direction -> distance between peaks), interpolate where it is unreliable;
+     d) compute the REGION MASK: classify blocks as recoverable / unrecoverable;
+     e) filter the recoverable region with an even-symmetric GABOR filter tuned to the local
+        orientation and frequency (the Gaussian envelope is a few ridge periods wide) ->
+        enhanced ridges; then binarise/thin.
+   WEAKNESSES (O24.2) [W: "computationally inefficient"; "orientation cannot be estimated
+   correctly in poor quality images"]: heavy computation (a separate Gabor kernel per pixel or
+   block), depends fully on the orientation/frequency estimates (wrong estimates in noisy or
+   high-curvature regions -> the filter creates false ridges), block artefacts, several
+   hand-tuned parameters, unrecoverable regions are lost.
+ PLACE IN THE COURSE: part of feature extraction (B5) before binarisation; improves the
+  result of NFIQ-measured poor quality (B10); the orientation field it uses is the same one
+  that feeds the singularity detection (B6).
+
+-------------------------------------------------------------------------------------
+B12  Henry classification system
+-------------------------------------------------------------------------------------
+ASKED IN (oral): O17.4, O25.2, O27.4
+
+ANSWER  [X; W for the origin and the 1024 groups; the slides only show the six pattern classes
+ on p.66-67 and say "remember classes?" on p.94]
+ The Henry system is the classical fingerprint CLASSIFICATION scheme (Edward Henry, 1896;
+ extended by the FBI) used to file and search ten-print cards. It classifies the fingers of a
+ card by PATTERN TYPE - arch/tented arch, loops (ulnar/radial = left/right loop), whorls (plus
+ twin loops/composites) - i.e. the classes of B2, which are deduced from the number and
+ position of singular points (loops, deltas; found by the Poincare index, B6). The primary
+ classification puts the ten fingers into 32 x 32 = 1024 groups by giving every finger with a
+ WHORL a weight (16, 16, 8, 8, 4, 4, 2, 2, 1, 1 for fingers 1-10) and forming a fraction
+ (sum of the even-numbered fingers + 1) / (sum of the odd-numbered fingers + 1) [W/X].
+ PURPOSE: partition the database so that a search compares the probe only with cards of the
+ same class (indexing) - it narrows the search and never identifies by itself (it is not
+ distinctive: ~65 % of prints are loops). Today the pattern class is used as an indexing aid
+ in AFIS and as the L1 description (B1, B2); matching is done with minutiae (B9).
+
+-------------------------------------------------------------------------------------
+D10  SIFT for face recognition
+-------------------------------------------------------------------------------------
+ASKED IN (oral): O5.1, O28.4
+
+ANSWER  [S p.288-296]  SIFT = Scale Invariant Feature Transform; a TEXTURE-BASED method (gradient
+ orientation branch of the taxonomy, D4). Motivation of texture-based recognition: raw pixel
+ values are quite sensitive to ambient lighting and facial expression, so characterise an image
+ by the distribution of LOCAL pixel values.
+ TWO MAJOR STEPS: (1) KEY POINT extraction; (2) DESCRIPTOR calculation in a local neighbourhood
+  of each key point. Orientation assignment: histogram (36 bins) of the local gradients at the
+  selected scale; the canonical orientation (and magnitude) is assigned at the peak (if there
+  are two major orientations, both are used).
+ DESCRIPTOR: a histogram of gradient orientations within the local neighbourhood. The patch is
+  divided into windows; each window has an orientation histogram with 8 bins; gradients are
+  weighted by a Gaussian window. Slide's small example: 2 x 2 windows x 8 bins = 32-D vector; in
+  practice 4 x 4 windows x 8 bins = 128-D FEATURE VECTOR per key point [S p.293; 128 = X].
+ FOR FACES: the face image is divided into several patches, a SIFT descriptor is built from each
+  patch and the final descriptor is the CONCATENATION of all of them.
+ TWO TYPES (O28.4): (1) classic SIFT with key point detection; (2) DENSE SIFT - since the face
+  images are roughly pre-aligned (e.g. by the eyes) the key point detection can be bypassed and
+  the descriptor constructed directly from the entire face image.
+ Problem: the number of key points can be large (hundreds) and finding the correspondences
+  between the key points of two images is difficult. Tolerance against pose variations is the
+  strength; assumption: pre-aligned faces.
+ ADVANTAGES: locality, distinctiveness (matchable against a large database), quantity (many
+  features even for small faces), efficiency (close to real time), extensibility.
+ THREE MATCHING STRATEGIES: (1) minimum pair distance (distance between all descriptors of the
+  two faces); (2) match eyes and mouth only (descriptors in these regions); (3) match on a
+  regular grid (descriptors of sub-images). Results shown on the BANCA database (MPD, EM, RG).
+
+-------------------------------------------------------------------------------------
+D11  Perceptron, neural networks, CNN layers, ReLU, AlexNet
+-------------------------------------------------------------------------------------
+ASKED IN (oral): O10.5, O11.1, O13.2, O17.3, O18.1, O20.1, O23.5
+
+ANSWER  [S p.308-328, 335-339]
+ DEEP LEARNING (p.308, 316): the representations of the earlier methods are not strongly
+  invariant, so use a MULTI-LAYER neural network = a HIERARCHY of feature extractors from
+  simple to complex. "Deep learning = just a multilayer artificial neural network"; a network is
+  called DEEP when it has several (many) hidden layers.
+ ARTIFICIAL NEURAL NETWORK (p.310): inspired by the human brain; artificial neurons connected by
+  WEIGHTED links; the weights represent the strength of the connections; learning = adjusting
+  the weights.
+ PERCEPTRON (p.311-312; structure [X]): the simplest neuron. INPUT: the feature values x_1..x_n;
+  each is multiplied by a weight w_i, the products are summed with a bias b (z = sum w_i x_i + b)
+  and passed through an ACTIVATION function (in the classic perceptron a step function); OUTPUT: a
+  single value, e.g. the class 0/1. A SINGLE-LAYER perceptron cannot model non-linear functions
+  (only linearly separable classes); adding a HIDDEN layer with a non-linear activation function
+  solves this (a multi-layer ANN with sets of adaptive weights learned during training).
+ LAYERS of a feed-forward network (p.313): input layer (the input features), hidden layers (apply
+  transformations with activation functions), output layer (final output); the data flow is
+  one-directional (input -> hidden -> output).
+ TRAINING (p.314-315, 321): 1 forward propagation (output from input and current weights), 2 loss
+  calculation (cross-entropy in CNN classification), 3 BACKPROPAGATION (gradients for the weight
+  adjustment - the efficient way to calculate gradients), 4 optimisation of the weights with
+  (stochastic) gradient descent; key parameters: learning rate, batch size, momentum.
+ CNN (p.316-320): convolution = image filtering (dot product of a filter with an image patch).
+  Components: CONVOLUTIONAL layers (filters extract spatial features; hyper-parameters: filter
+  size F, depth K, stride S, padding P; dependencies are local), the NON-LINEARITY - RECTIFIED
+  LINEAR UNITS (ReLU, f(x) = max(0, x)): they simplify backpropagation, make learning faster and
+  avoid saturation issues, POOLING layers (spatial pooling by max or sum over non-overlapping or
+  overlapping regions, e.g. max pooling 2 x 2 with stride 2: reduces the feature-map size while
+  keeping key information, gives invariance to small transformations and larger receptive
+  fields), and FULLY CONNECTED layers (flatten and classify). FNN = static input, unidirectional;
+  CNN = local connectivity, spatial grid-like data (images); RNN = temporal dependence (sequences).
+ ALEXNET (p.323-328): 8 layers, trained on ImageNet, 18.2 % top-5 error; the first part is the
+  FEATURE TRANSFORMATION (convolutional layers), the last part the DECISION MAKING (fully
+  connected layers). What we showed with it: (1) features from each layer fed into a linear SVM
+  / softmax -> HIGHER layers give MORE DISCRIMINATIVE features (most probably because of the
+  lots of data); (2) removal of layers: depth is key (D8 table). Number of parameters: the
+  FULLY CONNECTED layers hold most (~16 M in layer 7, ~50 M in layers 6+7), the convolutional
+  layers 3 and 4 only ~1 M - "deeper = more parameters" in the sense that the last (dense)
+  layers are the largest.
+ DEEP FACE NETWORKS (p.335-339): CNNs (convolution, non-linear activation, weight sharing ->
+  fewer parameters); DeepFace (2014, locally connected layers, LFW 97.35 %); modern ones are
+  ResNet variants (residual learning prevents vanishing gradients; depth matters); losses that
+  minimise intra-class variance and maximise inter-class separation: cross-entropy (softmax),
+  triplet loss (margin between genuine and impostor pairs), angular margin loss; FaceNet 99.63 %
+  (22 layers), DeepID2+ 99.47 % on LFW.
+
+#####################################################################################
+ G. NORMALISATION IN GENERAL
+#####################################################################################
+
+-------------------------------------------------------------------------------------
+G1  Normalisation: what it is, what we can normalise, why
+-------------------------------------------------------------------------------------
+ASKED IN (oral): O25.1
+
+ANSWER  [S p.155, 251, 264-266, 356-366 ; X for the general definition]
+ DEFINITION: normalisation brings samples (or scores) to a standard, comparable form, so that
+ nuisance variation unrelated to identity is removed BEFORE features are extracted / compared.
+ WHAT WE NORMALISE IN THE COURSE
+  - IRIS: the variation in pupil size (dilation/contraction), imaging distance, sensor and
+    subject -> Daugman's rubber sheet model maps the annulus to a fixed-size polar frame (C3);
+    the Hamming distance is also "normalised" - divided by the number of valid (unmasked) bits,
+    so it lies in [0, 1] (C4).
+  - FACE: POSE - detection, landmarking and alignment/frontalisation (geometric warping or
+    landmark detection, D3); ILLUMINATION - active methods (3D acquisition, near-IR, thermal
+    images) or passive methods: photometric normalisation (histogram normalisation, gamma
+    intensity correction, local normalisation), illumination-variation modelling (linear
+    subspaces, illumination cone, generalized photometric stereo) and illumination-invariant
+    features (direction of gradient, shape from shading, quotient image, eigen-phase, LBP).
+    Also scale: crop and resize by the eye distance (IPD).
+  - FINGERPRINT: the orientation field is smoothed with the doubled-angle vector field (B5);
+    in Hong's enhancement the image is normalised to a prescribed mean/variance (B11) [X].
+  - MATCH SCORES in score-level fusion: the scores of different matchers (distance or
+    similarity, different ranges and distributions) are mapped to a common domain with a
+    monotonic function - min-max, z-score, median, tanh - before the sum/max/min rules (E4);
+    rank fusion needs no normalisation (E5).
+ WHY: to make the same identity look the same (reduce intra-class variation), make
+ measurements from different images, sensors and subjects comparable, and make combination
+ across matchers meaningful.
+
+=====================================================================================
+3. WHERE THE "Exams SB.txt" ITEMS ARE ANSWERED
+=====================================================================================
+All 30 items are answered in the topics named in the index (section 1, codes N1-N30).
+(The oral-exam sets of section 1B are answered the same way, by code.)
+The ones that occur ONLY in that file (in no exam paper): N1 ultrasound sensor -> B4;
+N2 spurious minutiae -> B8; N4 dilation with age -> C5; N6 removing deep layers -> D8;
+N7 hybrid multibiometrics + multi-factor authentication -> E2; N8 common property of
+texture/model/deep-learning face models -> D4 [?]; N23 GMR/GNMR/FNMR/FMR -> A6; N25
+validation protocols -> A9; N28 improving fingerprint quality -> B10 [?].
+
+
+=====================================================================================
+4. NUMBERS TO MEMORISE
+=====================================================================================
+ Fingerprint  L1 250 ppi / L2 500 ppi / L3 1000 ppi ; ridges 20.7/cm (male), 23.4/cm (female)
+              minutiae per print: rolled ~136, plain ~56, fingermark ~18
+              pattern frequencies: plain arch 4 %, tented arch 3 %, loops 65 %, whorl 24 %,
+              twin loop 4 % ; SPs: 0 / 2 / 4
+              Poincare index: 0 none, 180 loop, -180 delta, 360 whorl
+              minutiae pairing: 15 pixels, 20 degrees (examples) ; ending direction: trace
+              ~10 pixels ; neighbours 1 = ending, 2 = ridge, 3 = bifurcation
+              NFIQ 1..5 (1 best) on a 11-value feature vector, 3-layer NN ; NFIQ 2: 69
+              features, random forest of 100 trees, score 0-100 ; MINDTCT block quality 0-4
+ Iris         100-200 pixels radial ; 640 x 480 NIR ; code 2048 bits + 2048-bit mask = 1024
+              sample points x 2 bits (e.g. 8 x 128) ; HD 0 same, 0.5 random, 1 opposite ;
+              impostor ~0.5 (binomial, ~249 degrees of freedom) ; ICE 2006: FNMR 1.1-1.4 %
+              at FMR 0.1 % ; template aging: FRR +157-305 % (IrisBEE), +239-370 % (VeriEye)
+              after 2 years ; dilation experiment: 18 subjects, 632 images
+ Face         L1 < 30 IPD, L2 30-75 IPD, L3 > 75 IPD [?] ; VJ: > 180 000 features in 24 x 24 ;
+              4 array accesses per rectangle ; cascade 10 stages, per stage GMR 0.99 and FMR
+              0.3 -> 0.9 and ~6e-6 ; first two features reject ~60 % of non-faces
+              AlexNet: -layer 7 = -1.1 %, -layers 6+7 = -5.7 %, -layers 3+4 = -3.0 %,
+              -layers 3,4,6,7 = -33.5 % ; LFW: DeepFace 97.35 %, DeepID2+ 99.47 %, FaceNet 99.63 %
+ Other        SIFT: 36-bin orientation histogram, 4 x 4 windows x 8 bins = 128-D per key point ;
+              Poincare ring = 8 neighbours ; Henry primary classification = 1024 groups
+ Fusion       five sources ; five levels (sensor, feature, score, rank, decision) ; rank only
+              in identification ; score rules product/sum/max/min/median ; Borda = LR with
+              equal weights ; majority voting needs > half of the matchers
+
+
+=====================================================================================
+5. MISTAKES IN THE STUDENT SOLVED SHEET (sb_exams_solved_2025.pdf) - DO NOT COPY
+=====================================================================================
+ 1  2017 Q4  "If AUC is 0.5 it is the worst-case scenario"  -> 0.5 = chance level (no
+            discrimination, ROC on the diagonal); the slide scale calls 0.5-0.6 "fail".
+ 2  2020 Q4  PCA/LDA described the wrong way round -> PCA maximises the total variance
+            (unsupervised); LDA maximises between-class and minimises within-class scatter.
+ 3  2023 Q2  accuracy example: numbers garbled ("accuracy of about 1 %") -> the always-"no
+            face" detector scores ~99 % accuracy and finds nothing.
+ 4  2022-01 Q6  "N/K training sessions of N-K samples" -> K folds, K training sessions of
+            N - N/K samples each.
+ 5  2024-01 Q2 / 2020 Q10 / 2022-01 Q2  bifurcation direction "mean of both" -> mean of the
+            two closest of the three branch directions (slide p.98).
+ 6  2022-02 Q6  printed lens: "Yes, it can intentionally create a false non-match" mixes the
+            effect of the lens with the effect of the printing on the detection (C7).
+ 7  2017 Q6  "majority = left loop": the slide gives loops 65 % (left + right); left loop is
+            the largest single class [X].
+ 8  2018 Q6  FTIR: only the disadvantages are written, the mechanism (frustrated TIR, dark
+            ridges, lens + camera) is missing (B4).
+ 9  2022-02 Q9  the "security -> lower FMR before the intersection" sentences are ambiguous;
+            in the DET plot compare FNMR at low FMR (security) and FMR at low FNMR (comfort).
+10  2020 Q1  majority voting is "more than half" of the matchers (the slide writes "(half)").
+11  2017 Q2  "distance score 0 should be viewed as an impostor" is only a replay-attack
+            remark (slide p.43), not a rule of the matching stage.
+12  2017 Q8  "near-IR ... also prevents the percentage of FMR to rise" (SB_exam.pdf) - not on
+            the slides; the slide reason is that NIR lets us image the texture of DARK irises.
+13  2018 Q9  the sheet leaves it empty / says only "higher-level"; the oral examiner links it
+            to the inverted-face problem of Viola-Jones (D8).
+ (Everything else in the sheet agrees with the slides; its wording was reused where right.)
+
+
+=====================================================================================
+6. OPEN POINTS AND WHAT I COULD NOT VERIFY
+=====================================================================================
+ - No marking key exists: nothing here is guaranteed to earn all the points.
+ - [?] L3 face features "> 75 IPD": not on the slides, not found in a second source.
+ - [?] N8 "common property" and N28 "improving fingerprint quality": the question wording is
+   incomplete; the answers give the best-supported reading and the alternatives.
+ - [?] B10 taxonomy of quality algorithms: taken from the solved sheet, no figure on the slides.
+ - [?] ORAL-ONLY topics that are not on the Jan25 slides: Hong's algorithm and the Henry system
+   (answered from outside sources/own knowledge; Hong's paper and the Henry weights could not be
+   opened in full), "1D smoothing" (description inferred) and "2SES" / "2D enhancement scheme"
+   (acronym NOT identified anywhere - ask a classmate or check older slides).
+ - [?] E2 "which multibiometric classes can run in parallel": read from the compatibility
+   table figure (slide p.344), not from text.
+ - [?] The oral-exam list is hearsay (students' memory); the grades and examiner remarks are
+   only as reliable as the reporters.
+ - SB_exam.pdf duplicates the 2017/2018/2020 part of the solved sheet, with the same errors
+   (it also writes "AUC = 0.5 worst case scenario, our biometric system is trash").
+ - VJ first-classifier numbers: the slide says ~60 % of non-faces rejected; outside sources
+   give 40-50 % false positives for the 2-feature classifier. The primary papers (Viola &
+   Jones 2001/2004) could not be fetched; quote the slide.
+ - 2025 paper: wording reconstructed from the solved sheet headings (the paper scan is not in
+   the folder). 2017 wording: from SB_exam.pdf. 2020 paper: left edge cut off in the photo.
+ - Exam file "exam-2022-01-16.pdf" is the paper of 2022-01-26.
+
+ OUTSIDE SOURCES CONSULTED (web search, 2026-10-24; used only to cross-check, secondary
+ sources, none is the primary paper):
+  - Face levels / IPD (L1 < 30, L2 30-75): https://www.slideshare.net/slideshow/face-recognition-132164517/132164517
+    and https://snote.readthedocs.io/en/latest/CSE491/Notes/1108.html (no L3 number)
+  - Daugman impostor binomial p = 0.5, N = 249: https://www.cl.cam.ac.uk/~jgd1000/binomdata.html
+    and https://arxiv.org/pdf/1107.2696
+  - Viola-Jones first two features and rejection rates:
+    https://sites.units.it/carrato/didatt/corsi_old/SIM_web/modulo_DSP/slides/50_ViolaJones.pdf
+    and https://cs.haifa.ac.il/hagit/courses/CHB/exampleWebPages/EyeOpening/webpage.html
+  - Spurious minutiae (spikes, holes, bridges, breaks, boundary rule, duality):
+    https://arxiv.org/pdf/1911.03052 and https://www.academia.edu/6085034/An_algorithm_for_fingerprint_image_postprocessing
+  - AUC 0.5 = chance: https://developers.google.com/machine-learning/crash-course/classification/roc-and-auc
+  - FTIR principle: https://patents.google.com/patent/US6429927
+  - Rank fusion (highest rank, Borda, logistic regression; Ho, Hull, Srihari 1994):
+    https://research.polyu.edu.hk/en/publications/personal-identification-using-multibiometrics-rank-level-fusion/
+  - Poincare index values 180 / 360 / -180: https://pubmed.ncbi.nlm.nih.gov/19443922
+  - HOG for faces, landmark vs regular grid (Deniz et al.): https://www.scitepress.org/Papers/2010/28205
+  - Hong et al. enhancement (TPAMI 20(8):777-789, 1998; Gabor, orientation + frequency;
+    "computationally inefficient"): https://www.slideshare.net/slideshow/efficient-fingerprint-image-enhancement-algorithm-based-on-gabor-filter/37905765
+    and the survey https://jqcsm.qu.edu.iq/index.php/journalcm/article/view/74
+  - STFT / two-stage enhancement (orientation, frequency, region mask in the Fourier domain):
+    https://www.cse.unr.edu/%7ebebis/CS474/StudentPaperPresentations/2007 - Fingerprint enhancement using STFT analysis.pdf
+    and https://arxiv.org/pdf/1805.07527 (no source defines "2SES")
+  - Henry classification (1896, FBI extensions, 1024 primary groups, filing not identification):
+    https://forensicreader.com/henry-fingerprint-classification-system/
+
+=====================================================================================
+END OF FILE
+=====================================================================================
